@@ -23,7 +23,8 @@
     "vue-layer": "^1.2.1",
     "vue-router": "^3.5.1",
     "vuedraggable": "^2.24.3",
-    "vuex": "^3.6.2"
+    "vuex": "^3.6.2",
+    "xlsx": "^0.17.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
