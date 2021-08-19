@@ -19,6 +19,8 @@ export const deleteUser = p => get('/user/deleteUser', p)
 export const updateUser = p => post('/user/updateUser', p)
 export const exportDefaultTemplate = p => getFile('/user/exportDefaultTemplate', p)
 export const exportUser = p => getFile('/user/exportUser', p)
+export const importUser = p => post('/user/importUser', p)
+
 
 //职位
 export const getJob = p => get('/job/getJob', p)
