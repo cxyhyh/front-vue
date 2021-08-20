@@ -7,14 +7,14 @@
       <el-input
         v-model="jobs.jobName"
         placeholder="请输入职位名称"
-        style="width: 150px"
+        style="margin-left: 0px"
         class="filter-item"
       />
       <el-select
         v-model="jobs.jobType"
         placeholder="请选择职位类型"
         clearable
-        style="width: 150px"
+        style="margin-left: 50px"
         class="filter-item"
       >
         <el-option
@@ -30,7 +30,7 @@
         placeholder="请选择学历要求"
         clearable
         class="filter-item"
-        style="width: 150px"
+        style="margin-left: 53px"
       >
         <el-option
           v-for="jb in jobedOption"
@@ -43,7 +43,7 @@
       <el-select
         v-model="jobs.workPosition"
         placeholder="请选择工作地点"
-        style="width: 150px"
+        style="margin-left: 60px"
         class="filter-item"
       >
         <el-option
@@ -57,10 +57,136 @@
       <el-button
         class="filter-item"
         type="primary"
+        style="margin-left: 60px"
         icon="el-icon-search"
         @click="pageJob()"
       >
         查询
+      </el-button>
+    </div>
+      <div class="filter-container2">
+         <el-button
+        slot="trigger"
+        @click="dialogVisible = true"
+        icon="el-icon-document"
+        type="primary"
+        >导入
+      </el-button>
+      <el-dialog width="900px" :visible.sync="dialogVisible">
+        <el-form ref="form" label-width="70px" v-model="formT">
+          <el-upload
+            action="https://jsonplaceholder.typicode.com/posts/"
+            :on-exceed="exceed"
+            limit="1"
+            :show-file-list="true"
+            :on-remove="remove"
+            accept=".xlsx"
+            :http-request="uploadFile"
+          >
+            <el-button size="small" type="primary" plain>选择文件</el-button>
+          </el-upload>
+        </el-form>
+        <div class="preview-excel">
+          <el-table
+            class="listTable_ele"
+            :data="list"
+            stripe
+            height="250"
+            style="width: 100%"
+          >
+            <el-table-column
+              prop="jobName"
+              label="职位名称"
+              width="150"
+              align="center"
+            ></el-table-column>
+            <el-table-column
+              prop="jobType"
+              label="职位类型"
+              width="100"
+              align="center"
+            ></el-table-column>
+            <el-table-column
+              prop="educationRequirement"
+              label="学历要求"
+              width="80"
+              align="center"
+            ></el-table-column>
+            <el-table-column
+              prop="sexRequirement"
+              label="性别要求"
+              width="60"
+              align="center"
+            ></el-table-column>
+            <el-table-column
+              prop="ageRequirement"
+              label="年龄要求"
+              width="60"
+              align="center"
+            ></el-table-column>
+            <el-table-column
+              prop="workTimeRequirement"
+              label="工作年限要求"
+              width="80"
+              align="center"
+            ></el-table-column>
+            <el-table-column
+              prop="workPosition"
+              label="工作地点"
+              width="60"
+              align="center"
+            ></el-table-column>
+            <el-table-column
+              prop="recruitNum"
+              label="招聘人数"
+              width="60"
+              align="center"
+            ></el-table-column>
+            <el-table-column
+              prop="specificRequirement"
+              label="具体要求"
+              width="200"
+              align="center"
+            ></el-table-column>
+            <el-table-column
+              prop="createTime"
+              label="发布时间"
+              width="100"
+              align="center"
+            ></el-table-column>
+            <el-table-column
+              prop="salary"
+              label="薪资"
+              width="70"
+              align="center"
+            ></el-table-column>
+            <el-table-column
+              prop="belongCompany"
+              label="所属公司"
+              width="180"
+              align="center"
+            ></el-table-column>
+          </el-table>
+        </div>
+        <span slot="footer" class="dialog-footer">
+          <el-button
+            class="download"
+            type="primary"
+            size="small"
+            icon="el-icon-download"
+            @click="exportDefaultTemplateJob()"
+          >
+            下载模板
+          </el-button>
+          <el-button type="primary" :loading="downloadLoading" size="small" @click="importJob()"
+            >导入</el-button
+          >
+        </span>
+      </el-dialog>
+    </div>
+    <div class="filter-container1">
+      <el-button class="upload2" type="primary" @click="exportJob()">
+        导出
       </el-button>
       <el-button
         class="filter-item"
@@ -378,7 +504,11 @@ import {
   getJobType,
   getWorkPosition,
   getEducationRequirement,
+  exportDefaultTemplateJob,
+  exportJob,
+  importJob,
 } from "../../../request/api";
+import XLSX from "../../../../node_modules/xlsx";
 export default {
   name: "jobInfo",
   components: {},
@@ -388,6 +518,7 @@ export default {
       pageSize: 4,
       total: 0,
       jobs: [],
+      list: [],
       jobTypeOption: [],
       jobedOption: [],
       jobworkOption: [],
@@ -410,6 +541,7 @@ export default {
         specificRequirement: "",
         createTime: "",
         jobId: "",
+        belongCompany:""
       },
       form1: {
         jobName: "",
@@ -424,8 +556,14 @@ export default {
         specificRequirement: "",
         createTime: "",
         jobId: "",
+        belongCompany:""
       },
       formLabelWidth: "120px",
+      name: "模板-职位.xlsx",
+      exportName: "职位信息.xlsx",
+      dialogVisible: false,
+      downloadLoading: false,
+      formT: {},
     };
   },
   mounted() {
@@ -435,6 +573,155 @@ export default {
     this.getEducationRequirement();
   },
   methods: {
+     async uploadFile(params) {
+      console.log(params);
+      const _file = params.file;
+      const fileReader = new FileReader();
+      fileReader.onload = (ev) => {
+        try {
+          const data = ev.target.result;
+          const workbook = XLSX.read(data, {
+            type: "binary",
+          });
+          for (let sheet in workbook.Sheets) {
+            //循环读取每个文件
+            const sheetArray = XLSX.utils.sheet_to_json(workbook.Sheets[sheet]);
+            //若当前sheet没有数据，则continue
+            if (sheetArray.length == 0) {
+              continue;
+            }
+            console.log("读取文件");
+            console.log(sheetArray);
+            for (let item in sheetArray) {
+              let rowTable = {};
+              //这里的rowTable的属性名注意要与上面表格的prop一致
+              //sheetArray的属性名与上传的表格的列名一致
+              rowTable.jobName = sheetArray[item].职位名称;
+              rowTable.jobType = sheetArray[item].职位类型;
+              rowTable.educationRequirement = sheetArray[item].学历要求;
+              rowTable.sexRequirement = sheetArray[item].性别要求;
+              rowTable.ageRequirement = sheetArray[item].年龄要求;
+              rowTable.workTimeRequirement = sheetArray[item].工作年限要求;
+              rowTable.workPosition = sheetArray[item].工作地点;
+              rowTable.recruitNum = sheetArray[item].招聘人数;
+              rowTable.specificRequirement = sheetArray[item].具体要求;
+              rowTable.createTime = sheetArray[item].发布时间;
+              rowTable.salary = sheetArray[item].薪资;
+              rowTable.belongCompany = sheetArray[item].所属公司;
+              this.list.push(rowTable);
+            }
+          }
+        } catch (e) {
+          this.$message.warning("文件类型不正确！");
+        }
+      };
+      fileReader.readAsBinaryString(_file);
+    },
+    check(){
+
+    },
+     importJob() {
+      importJob({
+        list: this.list,
+      })
+        .then((res) => {
+          if (res.data.code == 400) {
+            this.$message.error("导入失败！！");
+          } else {
+            this.$message.success("导入成功！！");
+            this.dialogVisible = false;
+          }
+          console.log(res.data);
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
+    },
+    exportJob() {
+      exportJob({
+        fileName: this.exportName,
+      })
+        .then((res) => {
+          // this.$message("文件下载成功");
+          console.log(res);
+          const blob = new Blob([res]);
+          const fileName = this.exportName;
+          if ("download" in document.createElement("a")) {
+            // 非IE下载
+            const elink = document.createElement("a");
+            elink.download = fileName;
+            elink.style.display = "none";
+            elink.href = URL.createObjectURL(blob);
+            document.body.appendChild(elink);
+            elink.click();
+            URL.revokeObjectURL(elink.href); // 释放URL 对象
+            document.body.removeChild(elink);
+          } else {
+            // IE10+下载
+            navigator.msSaveBlob(blob, fileName);
+          }
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
+    },
+     exportDefaultTemplateJob() {
+      exportDefaultTemplateJob({
+        moduleNameCn: this.name,
+      })
+        .then((res) => {
+          // this.$message("文件下载成功");
+          console.log(res);
+          const blob = new Blob([res]);
+          const fileName = this.name;
+          if ("download" in document.createElement("a")) {
+            // 非IE下载
+            const elink = document.createElement("a");
+            elink.download = fileName;
+            elink.style.display = "none";
+            elink.href = URL.createObjectURL(blob);
+            document.body.appendChild(elink);
+            elink.click();
+            URL.revokeObjectURL(elink.href); // 释放URL 对象
+            document.body.removeChild(elink);
+          } else {
+            // IE10+下载
+            navigator.msSaveBlob(blob, fileName);
+          }
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
+    },
+     beforeUpload(file) {
+      let extension = file.name.substring(file.name.lastIndexOf(".") + 1);
+      if (extension !== "xlsx") {
+        this.$message({
+          message: "上传文件只能是 xls格式!",
+          type: "warning",
+        });
+        return false;
+      }
+    },
+    uploadSuccess(res) {
+      if (res.code == 200) {
+        this.$message({
+          message: "导入成功!",
+          type: "info",
+        });
+      } else {
+        this.$alert(res.message, "导入失败", {
+          confirmButtonText: "确定",
+        });
+      }
+      this.$refs.upload.clearFiles();
+    },
+    exceed: function () {
+      this.$message.error("最多只能上传1个xls文件");
+    },
+    remove() {
+      this.list = [];
+    },
     addJob() {
       addJob(this.form1)
         .then((res) => {
@@ -580,7 +867,38 @@ export default {
 };
 </script>
 <style scoped>
+.listTable_ele{
+  color: grey;
+}
+.diaTable {
+  background-color: #41c79a25;
+}
+.filter-container /deep/ .filter-item {
+  height: 40px;
+  margin-top: 10px;
+  width: 150px;
+}
+.filter-container {
+  height: 70px;
+}
+.filter-container1 {
+  height: 40px;
+  width: 310px;
+  margin-left: 800px;
+  margin-top: -40px;
+}
+.filter-container2 {
+  height: 40px;
+  width: 70px;
+  margin-left: 700px;
+}
+.import {
+  width: 100px;
+  margin-left: 900px;
+  margin-top: -40px;
+}
 .etab {
+  margin-top: 25px;
   margin-left: 0px;
   border-radius: 5px;
 }

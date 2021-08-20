@@ -70,6 +70,7 @@
           <el-upload
             action="https://jsonplaceholder.typicode.com/posts/"
             :on-exceed="exceed"
+            :limit="1"
             :show-file-list="true"
             :on-remove="remove"
             accept=".xlsx"
@@ -81,6 +82,7 @@
         <div class="preview-excel">
           <el-table
             class="listTable_ele"
+            :row-class-name="tableRowClassName"
             :data="list"
             stripe
             height="250"
@@ -182,7 +184,7 @@
           >
             下载模板
           </el-button>
-          <el-button type="primary" :loading="downloadLoading" size="small" @click="importUser()"
+          <el-button type="primary" :loading="downloadLoading" size="small" @click="importU()"
             >导入</el-button
           >
         </span>
@@ -191,14 +193,6 @@
     <div class="filter-container1">
       <el-button class="upload2" type="primary" @click="exportUser()">
         导出
-      </el-button>
-      <el-button
-        class="download"
-        type="primary"
-        icon="el-icon-download"
-        @click="exportDefaultTemplate()"
-      >
-        下载模板
       </el-button>
       <el-button
         class="edit"
@@ -563,7 +557,7 @@ import {
   exportUser,
   importUser,
 } from "../../../request/api";
-import XLSX from "../../../../node_modules/xlsx";
+import XLSX from "xlsx";
 export default {
   name: "userInfo",
   components: {},
@@ -681,20 +675,31 @@ export default {
       };
       fileReader.readAsBinaryString(_file);
     },
+    importU(){
+       if(this.list.length == 0){
+          this.$message.warning('请最少导入一条数据！');
+       }
+       else{
+         this.importUser();
+       }
+
+    },
+  
     importUser() {
       importUser({
         list: this.list,
       })
         .then((res) => {
-          if (res.data.code == 400) {
+            if (res.data.code == 400) {
             this.$message.error("导入失败！！");
-            this.$message(res.$data.$message);
-            console.log(res.data.message);
+            this.$message(JSON.stringify(res.data.message));
+            console.log(res.data);
           } else {
             this.$message.success("导入成功！！");
             this.dialogVisible = false;
           }
-          console.log(res.data);
+          console.log(res.data);  
+          
         })
         .catch(function (err) {
           console.log(err);
@@ -771,19 +776,6 @@ export default {
         });
         return false;
       }
-    },
-    uploadSuccess(res) {
-      if (res.code == 200) {
-        this.$message({
-          message: "导入成功!",
-          type: "info",
-        });
-      } else {
-        this.$alert(res.message, "导入失败", {
-          confirmButtonText: "确定",
-        });
-      }
-      this.$refs.upload.clearFiles();
     },
     addUser() {
       addUser(this.form1)
@@ -941,13 +933,13 @@ export default {
 .filter-container1 {
   height: 40px;
   width: 310px;
-  margin-left: 670px;
+  margin-left: 800px;
   margin-top: -40px;
 }
 .filter-container2 {
   height: 40px;
   width: 70px;
-  margin-left: 570px;
+  margin-left: 700px;
 }
 .import {
   width: 100px;

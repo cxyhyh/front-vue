@@ -32,6 +32,9 @@ export const getEducationRequirement = p => get('/job/getEducationRequirement', 
 export const addJob = p => post('/job/addJob', p)
 export const deleteJob = p => get('/job/deleteJob', p)
 export const updateJob = p => post('/job/updateJob', p)
+export const exportDefaultTemplateJob = p => getFile('/job/exportDefaultTemplate', p)
+export const exportJob = p => getFile('/job/exportJob', p)
+export const importJob = p => post('/job/importJob', p)
 
 //企业
 export const getCompany = p => get('/company/getCompany', p)
@@ -42,6 +45,10 @@ export const getLocation = p => get('/company/getLocation', p)
 export const addCompany = p => post('/company/addCompany', p)
 export const deleteCompany = p => get('/company/deleteCompany', p)
 export const updateCompany = p => post('/company/updateCompany', p)
+export const exportDefaultTemplateCompany = p => getFile('/company/exportDefaultTemplate', p)
+export const exportCompany = p => getFile('/company/exportCompany', p)
+export const importCompany = p => post('/company/importCompany', p)
+
 
 //角色权限
 export const getRole = p => get('/role/getRole', p)

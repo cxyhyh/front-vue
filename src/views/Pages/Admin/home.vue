@@ -9,7 +9,7 @@
           @close="handleClose"
           background-color="#5683df"
          text-color="white"
-        >
+        >   
           <el-submenu index="1">
             <template slot="title"
               ><i class="el-icon-message" style="color: gold"></i>
@@ -114,7 +114,7 @@ export default {
   computed:{
     showUsername(){
       return Cookie.get('username')
-    }
+    },
 
   },
   mounted() {},
@@ -154,6 +154,7 @@ export default {
 }
 .el-aside {
   background-color:  #5683df;
+  
 }
 .elm {
   margin-top: 60px;
