@@ -89,89 +89,37 @@
             style="width: 100%"
           >
             <el-table-column
-              prop="username"
-              label="用户名"
-              width="80"
+              :label="item.label"
               align="center"
-            ></el-table-column>
-            <el-table-column
-              prop="password"
-              label="密码"
-              width="100"
-              align="center"
-            ></el-table-column>
-            <el-table-column
-              prop="roleType"
-              label="用户类型"
-              width="90"
-              align="center"
-            ></el-table-column>
-            <el-table-column
-              prop="realName"
-              label="姓名"
-              width="90"
-              align="center"
-            ></el-table-column>
-            <el-table-column
-              prop="sex"
-              label="性别"
-              width="60"
-              align="center"
-            ></el-table-column>
-            <el-table-column
-              prop="birth"
-              label="出生日期"
-              width="100"
-              align="center"
-            ></el-table-column>
-            <el-table-column
-              prop="nature"
-              label="民族"
-              width="60"
-              align="center"
-            ></el-table-column>
-            <el-table-column
-              prop="idCard"
-              label="身份证号"
-              width="200"
-              align="center"
-            ></el-table-column>
-            <el-table-column
-              prop="hometown"
-              label="籍贯"
-              width="150"
-              align="center"
-            ></el-table-column>
-            <el-table-column
-              prop="mobilePhone"
-              label="联系电话"
-              width="120"
-              align="center"
-            ></el-table-column>
-            <el-table-column
-              prop="address"
-              label="常驻地址"
-              width="150"
-              align="center"
-            ></el-table-column>
-            <el-table-column
-              prop="email"
-              label="电子邮箱"
-              width="180"
-              align="center"
-            ></el-table-column>
-            <el-table-column
-              prop="education"
-              label="学历"
-              width="80"
-              align="center"
-            ></el-table-column>
-            <el-table-column
-              prop="college"
-              label="毕业院校"
-              width="180"
-              align="center"
-            ></el-table-column>
+              :prop="item.props"
+              :key="'table' + index"
+              :min-width="item.width && item.width + 'px'"
+              width="min-content"
+              v-for="(item, index) in tableThead"
+            >
+              <template slot-scope="{ row, $index }">
+                <el-tooltip
+                  v-if="
+                    errorIndexArr.indexOf($index) != -1 &&
+                    errorIndexMsgObj[$index] &&
+                    errorIndexMsgObj[$index][item.props]
+                  "
+                  effect="dark"
+                  :content="
+                    errorIndexMsgObj[$index] &&
+                    errorIndexMsgObj[$index][item.props]
+                  "
+                  placement="top"
+                >
+                  <div class="table-content table-content-error">
+                    {{ (item.props && row[item.props]) || "该列不可为空！" }}
+                  </div>
+                </el-tooltip>
+                <div v-else class="table-content">
+                  {{ item.props && row[item.props] }}
+                </div>
+              </template>
+            </el-table-column>
           </el-table>
         </div>
         <span slot="footer" class="dialog-footer">
@@ -184,7 +132,11 @@
           >
             下载模板
           </el-button>
-          <el-button type="primary" :loading="downloadLoading" size="small" @click="importU()"
+          <el-button
+            type="primary"
+            :loading="downloadLoading"
+            size="small"
+            @click="importU()"
             >导入</el-button
           >
         </span>
@@ -563,6 +515,78 @@ export default {
   components: {},
   data() {
     return {
+      tableThead: [
+        {
+          props: "username",
+          label: "用户名",
+          width: "80",
+        },
+        {
+          props: "password",
+          label: "密码",
+          width: "100",
+        },
+        {
+          props: "roleType",
+          label: "用户类型",
+          width: "90",
+        },
+        {
+          props: "realName",
+          label: "姓名",
+          width: "90",
+        },
+        {
+          props: "sex",
+          label: "性别",
+          width: "60",
+        },
+        {
+          props: "birth",
+          label: "出生日期",
+          width: "100",
+        },
+        {
+          props: "nature",
+          label: "民族",
+          width: "60",
+        },
+        {
+          props: "idCard",
+          label: "身份证号",
+          width: "200",
+        },
+        {
+          props: "hometown",
+          label: "籍贯",
+          width: "150",
+        },
+        {
+          props: "mobilePhone",
+          label: "联系电话",
+          width: "120",
+        },
+        {
+          props: "address",
+          label: "常驻地址",
+          width: "150",
+        },
+        {
+          props: "email",
+          label: "电子邮箱",
+          width: "180",
+        },
+        {
+          props: "education",
+          label: "学历",
+          width: "80",
+        },
+        {
+          props: "college",
+          label: "毕业院校",
+          width: "180",
+        },
+      ],
       currentPage: 1,
       pageSize: 4,
       total: 0,
@@ -617,6 +641,8 @@ export default {
       dialogVisible: false,
       downloadLoading: false,
       formT: {},
+      errorIndexArr: [],
+      errorIndexMsgObj: {},
     };
   },
   mounted() {
@@ -649,8 +675,10 @@ export default {
               //这里的rowTable的属性名注意要与上面表格的prop一致
               //sheetArray的属性名与上传的表格的列名一致
               rowTable.username = sheetArray[item].用户名;
-              if(rowTable.username == this.users.username){
-                this.$message("第"+item+"行"+"用户名"+rowTable.username+"重复")
+              if (rowTable.username == this.users.username) {
+                this.$message(
+                  "第" + item + "行" + "用户名" + rowTable.username + "重复"
+                );
               }
               rowTable.password = sheetArray[item].密码;
               rowTable.roleType = sheetArray[item].用户类型;
@@ -667,7 +695,6 @@ export default {
               rowTable.college = sheetArray[item].毕业院校;
               this.list.push(rowTable);
             }
-
           }
         } catch (e) {
           this.$message.warning("文件类型不正确！");
@@ -675,35 +702,65 @@ export default {
       };
       fileReader.readAsBinaryString(_file);
     },
-    importU(){
-       if(this.list.length == 0){
-          this.$message.warning('请最少导入一条数据！');
-       }
-       else{
-         this.importUser();
-       }
-
+    importU() {
+      if (this.list.length == 0) {
+        this.$message.warning("请最少导入一条数据！");
+      } else {
+        this.importUser();
+      }
     },
-  
     importUser() {
       importUser({
         list: this.list,
       })
         .then((res) => {
-            if (res.data.code == 400) {
+          if (res.data.code == 400) {
+            let msgArr = res.data.message || [];
+            console.log(msgArr);
+            this.daoruErrorFun(msgArr);
             this.$message.error("导入失败！！");
-            this.$message(JSON.stringify(res.data.message));
-            console.log(res.data);
+
+            // this.$message(JSON.stringify(res.data.message));
           } else {
             this.$message.success("导入成功！！");
             this.dialogVisible = false;
           }
-          console.log(res.data);  
-          
+          console.log(res.data);
         })
         .catch(function (err) {
           console.log(err);
         });
+    },
+    daoruErrorFun(msgArr) {
+      let errorIndexArr = [];
+      let errorIndexMsgObj = {};
+      msgArr.forEach((v) => {
+        let arr = v.split("#@") || [];
+        let index = parseFloat(arr[0]);
+        errorIndexArr.push(index);
+        let value = arr[1] || "";
+        let arr1 = value.split("@");
+        errorIndexMsgObj[index] = {};
+        arr1.forEach((v1) => {
+          let arr2 = v1.split(":");
+          errorIndexMsgObj[index][arr2[0]] = arr2[1];
+        });
+      });
+      this.errorIndexArr = errorIndexArr;
+      this.errorIndexMsgObj = errorIndexMsgObj;
+    },
+    tableRowClassName({ row, rowIndex }) {
+      let $index = rowIndex;
+      for (let props in row) {
+        let res =
+          this.errorIndexArr.indexOf($index) != -1 &&
+          this.errorIndexMsgObj[$index] &&
+          this.errorIndexMsgObj[$index][props];
+        if (res) {
+          return "table-row-error";
+        }
+      }
+      return "";
     },
     exceed: function () {
       this.$message.error("最多只能上传1个xls文件");
@@ -915,8 +972,22 @@ export default {
   },
 };
 </script>
-<style scoped>
-.listTable_ele{
+<style lang='less' scoped>
+.preview-excel {
+  height: 90%;
+
+  .table-row-error {
+    background: rgba(255, 0, 0, 0.18) !important;
+    &:hover td {
+      background: none !important;
+    }
+  }
+
+  .table-content-error {
+    color: #e4393c;
+  }
+}
+.listTable_ele {
   color: grey;
 }
 .diaTable {

@@ -13,6 +13,10 @@ import success from './views/Pages/Admin/success.vue'
 import userInfo from './views/Pages/Admin/userInfo.vue'
 import jianLiInfo from './views/Pages/Admin/jianLiInfo.vue'
 import applicationInfo from './views/Pages/Admin/applicationInfo.vue'
+import edit from './views/Pages/common/editUserByUsername.vue'
+import editUserInfo from './views/Pages/common/editUserInfo.vue'
+import editPassword from './views/Pages/common/editPassword.vue'
+
 //fail
 import f404 from './views/Pages/fail/404.vue'
 //role
@@ -32,6 +36,7 @@ import zpLiuC from './views/Pages/Company/zpLiuC.vue'
 Vue.use(Button);
 Vue.use(VueRouter);
 let router = new VueRouter({
+    mode:'history',
     routes: [{
             path: '/',
             name: 'index',
@@ -73,6 +78,32 @@ let router = new VueRouter({
             component: f404,
         },
         {
+            path: '/edit',
+            name: 'edit',
+            component: edit,
+            meta: {
+                auth: true,
+            },
+            children: [
+                {
+                path: 'editUserInfo',
+                    name: 'editUserInfo',
+                    component: editUserInfo,
+                    meta: {
+                        auth: true,
+                    },
+            },
+            {
+                path: 'editPassword',
+                    name: 'editPassword',
+                    component: editPassword,
+                    meta: {
+                        auth: true,
+                    },
+            },
+        ]
+        },
+        {
             path: '/home',
             name: 'home',
             component: home,
@@ -89,7 +120,6 @@ let router = new VueRouter({
                         role: "admin",
                     },
                 },
-
                 {
                     path: 'success',
                     name: 'success',
@@ -109,6 +139,7 @@ let router = new VueRouter({
                     },
                 },
                 {
+                    
                     path: 'jianLiInfo',
                     name: 'jianLiInfo',
                     component: jianLiInfo,
@@ -270,7 +301,7 @@ let router = new VueRouter({
 
 
 
-    ]
+    ],
 })
 router.beforeEach((to, from, next) => {
     if (to.meta.auth && to.meta.role === 'admin') {

@@ -44,8 +44,11 @@
               ></i>
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item>{{ showUsername }}</el-dropdown-item>
+                 <el-dropdown-item
+              ><router-link to="/edit" class="edit">个人信息</router-link></el-dropdown-item
+            >
                 <el-dropdown-item
-                  ><router-link to="/" @click.native="exit"
+                  ><router-link to="/" @click.native="exit" class="exit"
                     >退出登录</router-link
                   ></el-dropdown-item
                 >
@@ -133,5 +136,11 @@ export default {
   text-decoration: none;
   display: inline-block;
   padding: 0 20px;
+}
+.edit{
+  text-decoration: none;
+}
+.exit{
+  text-decoration: none;
 }
 </style>

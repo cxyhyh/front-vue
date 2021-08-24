@@ -64,8 +64,8 @@
         查询
       </el-button>
     </div>
-      <div class="filter-container2">
-         <el-button
+    <div class="filter-container2">
+      <el-button
         slot="trigger"
         @click="dialogVisible = true"
         icon="el-icon-document"
@@ -89,83 +89,45 @@
         <div class="preview-excel">
           <el-table
             class="listTable_ele"
+            :row-class-name="tableRowClassName"
+            align="center"
             :data="list"
             stripe
             height="250"
             style="width: 100%"
           >
             <el-table-column
-              prop="jobName"
-              label="职位名称"
-              width="150"
+              :label="item.label"
               align="center"
-            ></el-table-column>
-            <el-table-column
-              prop="jobType"
-              label="职位类型"
-              width="100"
-              align="center"
-            ></el-table-column>
-            <el-table-column
-              prop="educationRequirement"
-              label="学历要求"
-              width="80"
-              align="center"
-            ></el-table-column>
-            <el-table-column
-              prop="sexRequirement"
-              label="性别要求"
-              width="60"
-              align="center"
-            ></el-table-column>
-            <el-table-column
-              prop="ageRequirement"
-              label="年龄要求"
-              width="60"
-              align="center"
-            ></el-table-column>
-            <el-table-column
-              prop="workTimeRequirement"
-              label="工作年限要求"
-              width="80"
-              align="center"
-            ></el-table-column>
-            <el-table-column
-              prop="workPosition"
-              label="工作地点"
-              width="60"
-              align="center"
-            ></el-table-column>
-            <el-table-column
-              prop="recruitNum"
-              label="招聘人数"
-              width="60"
-              align="center"
-            ></el-table-column>
-            <el-table-column
-              prop="specificRequirement"
-              label="具体要求"
-              width="200"
-              align="center"
-            ></el-table-column>
-            <el-table-column
-              prop="createTime"
-              label="发布时间"
-              width="100"
-              align="center"
-            ></el-table-column>
-            <el-table-column
-              prop="salary"
-              label="薪资"
-              width="70"
-              align="center"
-            ></el-table-column>
-            <el-table-column
-              prop="belongCompany"
-              label="所属公司"
-              width="180"
-              align="center"
-            ></el-table-column>
+              :prop="item.props"
+              :key="'table' + index"
+              :min-width="item.width && item.width + 'px'"
+              width="min-content"
+              v-for="(item, index) in tableThead"
+            >
+              <template slot-scope="{ row, $index }">
+                <el-tooltip
+                  v-if="
+                    errorIndexArr.indexOf($index) != -1 &&
+                    errorIndexMsgObj[$index] &&
+                    errorIndexMsgObj[$index][item.props]
+                  "
+                  effect="dark"
+                  :content="
+                    errorIndexMsgObj[$index] &&
+                    errorIndexMsgObj[$index][item.props]
+                  "
+                  placement="top"
+                >
+                  <div class="table-content table-content-error">
+                    {{ (item.props && row[item.props]) || "该列不可为空！" }}
+                  </div>
+                </el-tooltip>
+                <div v-else class="table-content">
+                  {{ item.props && row[item.props] }}
+                </div>
+              </template>
+            </el-table-column>
           </el-table>
         </div>
         <span slot="footer" class="dialog-footer">
@@ -178,7 +140,11 @@
           >
             下载模板
           </el-button>
-          <el-button type="primary" :loading="downloadLoading" size="small" @click="importJob()"
+          <el-button
+            type="primary"
+            :loading="downloadLoading"
+            size="small"
+            @click="importU()"
             >导入</el-button
           >
         </span>
@@ -219,7 +185,7 @@
         >
           <el-input v-model="form1.jobType"></el-input>
         </el-form-item>
-         <el-form-item
+        <el-form-item
           label="薪水"
           prop="salary"
           :rules="[{ required: true, message: '薪水不能为空' }]"
@@ -388,7 +354,7 @@
               <el-form-item label="职位类型">
                 <span>{{ props.row.jobType }}</span>
               </el-form-item>
-               <el-form-item label="薪水">
+              <el-form-item label="薪水">
                 <span>{{ props.row.salary }}</span>
               </el-form-item>
               <el-form-item label="学历要求">
@@ -514,6 +480,68 @@ export default {
   components: {},
   data() {
     return {
+      tableThead: [
+        {
+          props: "jobName",
+          label: "职位名称",
+          width: "150",
+        },
+        {
+          props: "jobType",
+          label: "职位类型",
+          width: "100",
+        },
+        {
+          props: "educationRequirement",
+          label: "学历要求",
+          width: "80",
+        },
+        {
+          props: "sexRequirement",
+          label: "性别要求",
+          width: "60",
+        },
+        {
+          props: "ageRequirement",
+          label: "年龄要求",
+          width: "60",
+        },
+        {
+          props: "workTimeRequirement",
+          label: "工作年限要求",
+          width: "80",
+        },
+        {
+          props: "workPosition",
+          label: "工作地点",
+          width: "60",
+        },
+        {
+          props: "recruitNum",
+          label: "招聘人数",
+          width: "60",
+        },
+        {
+          props: "specificRequirement",
+          label: "具体要求",
+          width: "200",
+        },
+        {
+          props: "createTime",
+          label: "发布时间",
+          width: "100",
+        },
+        {
+          props: "salary",
+          label: "薪资",
+          width: "70",
+        },
+        {
+          props: "belongCompany",
+          label: "所属公司",
+          width: "180",
+        },
+      ],
       currentPage: 1,
       pageSize: 4,
       total: 0,
@@ -541,7 +569,7 @@ export default {
         specificRequirement: "",
         createTime: "",
         jobId: "",
-        belongCompany:""
+        belongCompany: "",
       },
       form1: {
         jobName: "",
@@ -556,7 +584,7 @@ export default {
         specificRequirement: "",
         createTime: "",
         jobId: "",
-        belongCompany:""
+        belongCompany: "",
       },
       formLabelWidth: "120px",
       name: "模板-职位.xlsx",
@@ -564,6 +592,8 @@ export default {
       dialogVisible: false,
       downloadLoading: false,
       formT: {},
+      errorIndexArr: [],
+      errorIndexMsgObj: {},
     };
   },
   mounted() {
@@ -573,7 +603,7 @@ export default {
     this.getEducationRequirement();
   },
   methods: {
-     async uploadFile(params) {
+    async uploadFile(params) {
       console.log(params);
       const _file = params.file;
       const fileReader = new FileReader();
@@ -617,15 +647,53 @@ export default {
       };
       fileReader.readAsBinaryString(_file);
     },
-    check(){
-
+    daoruErrorFun(msgArr) {
+      let errorIndexArr = [];
+      let errorIndexMsgObj = {};
+      msgArr.forEach((v) => {
+        let arr = v.split("#@") || [];
+        let index = parseFloat(arr[0]);
+        errorIndexArr.push(index);
+        let value = arr[1] || "";
+        let arr1 = value.split("@");
+        errorIndexMsgObj[index] = {};
+        arr1.forEach((v1) => {
+          let arr2 = v1.split(":");
+          errorIndexMsgObj[index][arr2[0]] = arr2[1];
+        });
+      });
+      this.errorIndexArr = errorIndexArr;
+      this.errorIndexMsgObj = errorIndexMsgObj;
     },
-     importJob() {
+    tableRowClassName({ row, rowIndex }) {
+      let $index = rowIndex;
+      for (let props in row) {
+        let res =
+          this.errorIndexArr.indexOf($index) != -1 &&
+          this.errorIndexMsgObj[$index] &&
+          this.errorIndexMsgObj[$index][props];
+        if (res) {
+          return "table-row-error";
+        }
+      }
+      return "";
+    },
+    importU() {
+      if (this.list.length == 0) {
+        this.$message.warning("请最少导入一条数据！");
+      } else {
+        this.importJob();
+      }
+    },
+    importJob() {
       importJob({
         list: this.list,
       })
         .then((res) => {
           if (res.data.code == 400) {
+            let msgArr = res.data.message || [];
+            console.log(msgArr);
+            this.daoruErrorFun(msgArr);
             this.$message.error("导入失败！！");
           } else {
             this.$message.success("导入成功！！");
@@ -665,7 +733,7 @@ export default {
           console.log(err);
         });
     },
-     exportDefaultTemplateJob() {
+    exportDefaultTemplateJob() {
       exportDefaultTemplateJob({
         moduleNameCn: this.name,
       })
@@ -693,7 +761,7 @@ export default {
           console.log(err);
         });
     },
-     beforeUpload(file) {
+    beforeUpload(file) {
       let extension = file.name.substring(file.name.lastIndexOf(".") + 1);
       if (extension !== "xlsx") {
         this.$message({
@@ -866,8 +934,21 @@ export default {
   },
 };
 </script>
-<style scoped>
-.listTable_ele{
+<style lang='less' scoped>
+.preview-excel {
+  height: 90%;
+
+  .table-row-error {
+    background: rgba(255, 0, 0, 0.18) !important;
+    &:hover td {
+      background: none !important;
+    }
+  }
+  .table-content-error {
+    color: #e4393c;
+  }
+}
+.listTable_ele {
   color: grey;
 }
 .diaTable {

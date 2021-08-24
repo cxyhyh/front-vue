@@ -7,7 +7,7 @@
       <el-input
         v-model="companys.companyName"
         placeholder="请输入企业名称"
-         style="margin-left: 140px"
+        style="margin-left: 140px"
         class="filter-item"
       >
       </el-input>
@@ -50,8 +50,8 @@
         查询
       </el-button>
     </div>
-     <div class="filter-container2">
-         <el-button
+    <div class="filter-container2">
+      <el-button
         slot="trigger"
         @click="dialogVisible = true"
         icon="el-icon-document"
@@ -75,77 +75,45 @@
         <div class="preview-excel">
           <el-table
             class="listTable_ele"
+            :row-class-name="tableRowClassName"
             :data="list"
             stripe
+            align="center"
             height="250"
             style="width: 100%"
           >
             <el-table-column
-              prop="companyName"
-              label="企业名称"
-              width="180"
+              :label="item.label"
               align="center"
-            ></el-table-column>
-            <el-table-column
-              prop="companyType"
-              label="企业类型"
-              width="100"
-              align="center"
-            ></el-table-column>
-            <el-table-column
-              prop="foundTime"
-              label="成立时间"
-              width="100"
-              align="center"
-            ></el-table-column>
-            <el-table-column
-              prop="employNum"
-              label="员工人数"
-              width="60"
-              align="center"
-            ></el-table-column>
-            <el-table-column
-              prop="location"
-              label="所在位置"
-              width="60"
-              align="center"
-            ></el-table-column>
-            <el-table-column
-              prop="telephone"
-              label="联系电话"
-              width="150"
-              align="center"
-            ></el-table-column>
-            <el-table-column
-              prop="address"
-              label="联系地址"
-              width="200"
-              align="center"
-            ></el-table-column>
-            <el-table-column
-              prop="postalCode"
-              label="邮政编码"
-              width="80"
-              align="center"
-            ></el-table-column>
-            <el-table-column
-              prop="http"
-              label="网址"
-              width="200"
-              align="center"
-            ></el-table-column>
-            <el-table-column
-              prop="email"
-              label="电子邮箱"
-              width="200"
-              align="center"
-            ></el-table-column>
-            <el-table-column
-              prop="introduce"
-              label="企业简介"
-              width="1000"
-              align="center"
-            ></el-table-column>
+              :prop="item.props"
+              :key="'table' + index"
+              :min-width="item.width && item.width + 'px'"
+              width="min-content"
+              v-for="(item, index) in tableThead"
+            >
+              <template slot-scope="{ row, $index }">
+                <el-tooltip
+                  v-if="
+                    errorIndexArr.indexOf($index) != -1 &&
+                    errorIndexMsgObj[$index] &&
+                    errorIndexMsgObj[$index][item.props]
+                  "
+                  effect="dark"
+                  :content="
+                    errorIndexMsgObj[$index] &&
+                    errorIndexMsgObj[$index][item.props]
+                  "
+                  placement="top"
+                >
+                  <div class="table-content table-content-error">
+                    {{ (item.props && row[item.props]) || "该列不可为空！" }}
+                  </div>
+                </el-tooltip>
+                <div v-else class="table-content">
+                  {{ item.props && row[item.props] }}
+                </div>
+              </template>
+            </el-table-column>
           </el-table>
         </div>
         <span slot="footer" class="dialog-footer">
@@ -158,7 +126,11 @@
           >
             下载模板
           </el-button>
-          <el-button type="primary" :loading="downloadLoading" size="small" @click="importCompany()"
+          <el-button
+            type="primary"
+            :loading="downloadLoading"
+            size="small"
+            @click="importU()"
             >导入</el-button
           >
         </span>
@@ -472,11 +444,78 @@ export default {
   components: {},
   data() {
     return {
+      tableThead: [
+        {
+          props: "companyName",
+          label: "企业名称",
+          width: "180",
+        },
+        {
+          props: "companyType",
+          label: "企业类型",
+          width: "100",
+        },
+        {
+          props: "foundTime",
+          label: "成立时间",
+          width: "100",
+        },
+        {
+          props: "employNum",
+          label: "员工人数",
+          width: "60",
+        },
+        {
+          props: "location",
+          label: "所在位置",
+          width: "60",
+        },
+        {
+          props: "telephone",
+          label: "联系电话",
+          width: "150",
+        },
+        {
+          props: "address",
+          label: "联系地址",
+          width: "200",
+        },
+        {
+          props: "postalCode",
+          label: "邮政编码",
+          width: "80",
+        },
+        {
+          props: "http",
+          label: "网址",
+          width: "200",
+        },
+        {
+          props: "email",
+          label: "电子邮箱",
+          width: "120",
+        },
+        {
+          props: "address",
+          label: "常驻地址",
+          width: "150",
+        },
+        {
+          props: "email",
+          label: "电子邮箱",
+          width: "200",
+        },
+        {
+          props: "introduce",
+          label: "企业简介",
+          width: "1000",
+        },
+      ],
       currentPage: 1,
       pageSize: 4,
       total: 0,
       companys: [],
-      list:[],
+      list: [],
       companyTypeOption: [],
       locationOption: [],
       multipleSelection: [],
@@ -519,6 +558,8 @@ export default {
       dialogVisible: false,
       downloadLoading: false,
       formT: {},
+      errorIndexArr: [],
+      errorIndexMsgObj: {},
     };
   },
   mounted() {
@@ -527,7 +568,7 @@ export default {
     this.getLocation();
   },
   methods: {
-     async uploadFile(params) {
+    async uploadFile(params) {
       console.log(params);
       const _file = params.file;
       const fileReader = new FileReader();
@@ -570,12 +611,53 @@ export default {
       };
       fileReader.readAsBinaryString(_file);
     },
-     importCompany() {
+    daoruErrorFun(msgArr) {
+      let errorIndexArr = [];
+      let errorIndexMsgObj = {};
+      msgArr.forEach((v) => {
+        let arr = v.split("#@") || [];
+        let index = parseFloat(arr[0]);
+        errorIndexArr.push(index);
+        let value = arr[1] || "";
+        let arr1 = value.split("@");
+        errorIndexMsgObj[index] = {};
+        arr1.forEach((v1) => {
+          let arr2 = v1.split(":");
+          errorIndexMsgObj[index][arr2[0]] = arr2[1];
+        });
+      });
+      this.errorIndexArr = errorIndexArr;
+      this.errorIndexMsgObj = errorIndexMsgObj;
+    },
+    tableRowClassName({ row, rowIndex }) {
+      let $index = rowIndex;
+      for (let props in row) {
+        let res =
+          this.errorIndexArr.indexOf($index) != -1 &&
+          this.errorIndexMsgObj[$index] &&
+          this.errorIndexMsgObj[$index][props];
+        if (res) {
+          return "table-row-error";
+        }
+      }
+      return "";
+    },
+    importU() {
+      if (this.list.length == 0) {
+        this.$message.warning("请最少导入一条数据！");
+      } else {
+        this.importCompany();
+      }
+    },
+    importCompany() {
       importCompany({
         list: this.list,
       })
         .then((res) => {
           if (res.data.code == 400) {
+            let msgArr = res.data.message || [];
+            console.log(msgArr);
+            this.daoruErrorFun(msgArr);
             this.$message.error("导入失败！！");
           } else {
             this.$message.success("导入成功！！");
@@ -615,7 +697,7 @@ export default {
           console.log(err);
         });
     },
-     exportDefaultTemplateCompany() {
+    exportDefaultTemplateCompany() {
       exportDefaultTemplateCompany({
         moduleNameCn: this.name,
       })
@@ -643,7 +725,7 @@ export default {
           console.log(err);
         });
     },
-     beforeUpload(file) {
+    beforeUpload(file) {
       let extension = file.name.substring(file.name.lastIndexOf(".") + 1);
       if (extension !== "xlsx") {
         this.$message({
@@ -809,8 +891,20 @@ export default {
 };
 </script>
 
-<style scoped>
-.listTable_ele{
+<style lang='less' scoped>
+.preview-excel {
+  height: 90%;
+  .table-row-error {
+    background: rgba(255, 0, 0, 0.18) !important;
+    &:hover td {
+      background: none !important;
+    }
+  }
+  .table-content-error {
+    color: #e4393c;
+  }
+}
+.listTable_ele {
   color: grey;
 }
 .diaTable {

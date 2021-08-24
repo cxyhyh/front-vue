@@ -7,11 +7,28 @@
 <script>
 
 export default {
-  name: 'App'
+  name: 'App',
+  provide(){
+    return{
+      reload:this.reload
+    }
+  },
+  data(){
+    return{
+      isRouterAlive:true
+    }
+  },
+  methods:{
+    reload(){
+      this.isRouterAlive = false;
+      this.$$nextTick(function(){
+        this.isRouterAlive = true;
+      })
+    }
+  }
   
 }
 </script>
-
 <style>
 body::-webkit-scrollbar {display: none;}
 html,
@@ -21,5 +38,4 @@ body {
 	background-attachment: fixed;/* 不设置的话页面滑动时，背景会不铺满*/
   
 } 
-
 </style>

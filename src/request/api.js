@@ -20,6 +20,9 @@ export const updateUser = p => post('/user/updateUser', p)
 export const exportDefaultTemplate = p => getFile('/user/exportDefaultTemplate', p)
 export const exportUser = p => getFile('/user/exportUser', p)
 export const importUser = p => post('/user/importUser', p)
+export const editUser = p => post('/user/editUser', p)
+export const updatePassword = p => get('/user/updatePassword', p)
+
 
 
 //职位
