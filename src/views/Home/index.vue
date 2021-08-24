@@ -40,6 +40,7 @@ import Cookie from 'js-cookie'
 import { login, selectRoleTypeByName } from "../../request/api";
 
 export default {
+  inject:['reload'],
   name: "index",
   data() {
     return {
@@ -57,14 +58,16 @@ export default {
   mounted() {
     this.identifyCode = "";
     this.makeiCode(this.identifyCodes, 4);
+    this.refreshCode();
   },
   methods: {
     reset(){
       this.username=null;
       this.password=null;
       this.yzmcode=null;
+      this.refreshCode();
 
-    },
+    },  
     login() {
       login({
         username: this.username,
@@ -89,6 +92,7 @@ export default {
             this.$message("密码不能为空，请输入密码！！");
           } else {
             this.$message("用户名或密码错误");
+             this.refreshCode();
           }
         }
 

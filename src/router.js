@@ -4,6 +4,7 @@ import Button from 'ant-design-vue'
 //Home
 import index from './views/Home/index.vue'
 //Admin
+import adminIndex from './views/Pages/Admin/index.vue'
 import companyInfo from './views/Pages/Admin/companyInfo.vue'
 import home from './views/Pages/Admin/home.vue'
 import jobInfo from './views/Pages/Admin/jobInfo.vue'
@@ -115,6 +116,15 @@ let router = new VueRouter({
                     path: 'userInfo',
                     name: 'userInfo',
                     component: userInfo,
+                    meta: {
+                        auth: true,
+                        role: "admin",
+                    },
+                },
+                {
+                    path: 'index',
+                    name: 'index',
+                    component: adminIndex,
                     meta: {
                         auth: true,
                         role: "admin",
