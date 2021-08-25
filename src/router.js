@@ -4,6 +4,8 @@ import Button from 'ant-design-vue'
 //Home
 import index from './views/Home/index.vue'
 //Admin
+import zzt from './views/Pages/echarts/zhuzhuangtu.vue'
+import bingTu from './views/Pages/echarts/bingtu.vue'
 import adminIndex from './views/Pages/Admin/index.vue'
 import companyInfo from './views/Pages/Admin/companyInfo.vue'
 import home from './views/Pages/Admin/home.vue'
@@ -129,6 +131,24 @@ let router = new VueRouter({
                         auth: true,
                         role: "admin",
                     },
+                    children: [
+                        {
+                        path: 'bingTu',
+                            name: 'bingTu',
+                            component: bingTu,
+                            meta: {
+                                auth: true,
+                            },
+                    },
+                    {
+                        path: 'zzt',
+                            name: 'zzt',
+                            component: zzt,
+                            meta: {
+                                auth: true,
+                            },
+                    },
+                ]
                 },
                 {
                     path: 'success',
