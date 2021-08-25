@@ -21,13 +21,9 @@ export default {
   //在echarts_option中写东西就行了，官方文档直接下这里就可以自己玩了
   data() {
     return {
-      list: [
-          {
-               name:[],
-               value:[]
-
-          }
-      ],
+        list:[],
+    //   name:[],
+    //   value:[],
       echarts1_option: {
         //需要的话下面内容copy到主体代码块即可
         backgroundColor: "#45515a",
@@ -92,11 +88,18 @@ export default {
             type: "pie",
             radius: "55%",
             center: ["50%", "50%"],
-            data: [
-              { value: 335, name: "直接访问" },
-              { value: 310, name: "邮件营销" },
-              { value: 274, name: "联盟广告" },
-            ],
+            // data: [
+            //   { value: 335, name: "直接访问" },
+            //   { value: 310, name: "邮件营销" },
+            //   { value: 274, name: "联盟广告" },
+            // ],
+            // data:[
+            //     {
+            //         value:this.value,
+            //         name:this.name,
+            //     }      
+            // ],
+            data:this.list,
             roseType: "radius", //角度和半径展现百分比，'area'只用半径展现
             label: {
               //饼图图形的文本标签
@@ -126,7 +129,6 @@ export default {
                 shadowColor: "rgba(0, 0, 0, 0.5)", //阴影颜色，一般黑
               },
             },
-
             animationType: "scale", //初始动画效果，scale是缩放，expansion是展开
             animationEasing: "elasticOut", //初始动画缓动效果
             animationDelay: function () {
@@ -142,17 +144,23 @@ export default {
     getRoleTypeNum() {
       getRoleTypeNum({})
         .then((res) => {
-          
-          this.re = JSON.stringify(res.data);
-          for(var i = 0;i<res.data.length;i++){
-              this.list.name = res.data[i].name;
-              console.log(this.list.name);
-              this.list.value = res.data[i].value;
-              console.log(this.list.value);
+        //     let nameData = [];
+        //     let valueData =[];
+        //     let xqo = res.data; 
         
-          }
-          console.log(this.re)
-          console.log(res.data);
+        //     for(var i in xqo ){
+        //       nameData.push(xqo[i].name);
+        //     //   console.log(names);
+        //       valueData.push(xqo[i].value);
+        //     //   console.log(values);
+        //   }
+        //   this.name = nameData;
+        //   this.value = valueData;
+        //   console.log(this.name);
+        //   console.log(this.value);
+        console.log(this);
+          this.list = res.data;
+          console.log(this.list)
           
         })
         .catch(function (err) {
