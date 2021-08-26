@@ -4,8 +4,11 @@ import Button from 'ant-design-vue'
 //Home
 import index from './views/Home/index.vue'
 //Admin
-import zzt from './views/Pages/echarts/zhuzhuangtu.vue'
-import bingTu from './views/Pages/echarts/bingtu.vue'
+import ind from './views/Pages/Admin/ind.vue'
+import map from './views/Pages/echarts/map.vue'
+import companyPie from './views/Pages/echarts/companyPie.vue'
+import userPie from './views/Pages/echarts/userPie.vue'
+import jobPie from './views/Pages/echarts/jobPie.vue'
 import adminIndex from './views/Pages/Admin/index.vue'
 import companyInfo from './views/Pages/Admin/companyInfo.vue'
 import home from './views/Pages/Admin/home.vue'
@@ -133,17 +136,33 @@ let router = new VueRouter({
                     },
                     children: [
                         {
-                        path: 'bingTu',
-                            name: 'bingTu',
-                            component: bingTu,
+                        path: 'jobPie',
+                            name: 'jobPie',
+                            component: jobPie,
                             meta: {
                                 auth: true,
                             },
                     },
                     {
-                        path: 'zzt',
-                            name: 'zzt',
-                            component: zzt,
+                        path: 'userPie',
+                            name: 'userPie',
+                            component: userPie,
+                            meta: {
+                                auth: true,
+                            },
+                    },
+                    {
+                        path: 'companyPie',
+                            name: 'companyPie',
+                            component: companyPie,
+                            meta: {
+                                auth: true,
+                            },
+                    },
+                    {
+                        path: 'map',
+                            name: 'map',
+                            component: map,
                             meta: {
                                 auth: true,
                             },
@@ -154,6 +173,15 @@ let router = new VueRouter({
                     path: 'success',
                     name: 'success',
                     component: success,
+                    meta: {
+                        auth: true,
+                        role: "admin",
+                    },
+                },
+                {
+                    path: 'ind',
+                    name: 'ind',
+                    component: ind,
                     meta: {
                         auth: true,
                         role: "admin",

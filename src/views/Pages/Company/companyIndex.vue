@@ -24,11 +24,6 @@
             </router-link></el-menu-item
           >
           <el-menu-item index="5">
-            <router-link to="/companyIndex/register" class="rou"
-              >注册</router-link
-            >
-          </el-menu-item>
-          <el-menu-item index="6">
             <el-dropdown>
               <i
                 class="el-icon-user-solid"
@@ -36,6 +31,11 @@
               ></i>
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item>{{ showUsername }}</el-dropdown-item>
+                <el-dropdown-item>
+                  <el-badge :value=a class="item">
+                    消息
+</el-badge>
+                  </el-dropdown-item>
                  <el-dropdown-item
               ><router-link to="/edit" class="edit">个人信息</router-link></el-dropdown-item
             >
@@ -64,7 +64,9 @@ export default {
   name: "userIndex",
   components: {},
   data() {
-    return {};
+    return {
+      a:12
+    };
   },
   mounted() {},
   computed: {

@@ -77,6 +77,12 @@
               >
             </el-menu-item>
           </el-submenu>
+           <el-menu-item index="6">
+            <router-link to="/home/ind" class="rou" exact>
+              <i class="el-icon-s-home" style="color: gold"></i>
+              首页</router-link
+            >
+          </el-menu-item>
         </el-menu>
       </div>
     </el-aside>

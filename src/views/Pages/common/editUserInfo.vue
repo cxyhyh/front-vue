@@ -32,7 +32,7 @@
       <el-form-item label="所属院校" prop="college"  style="margin-left:500px;margin-top:-65px">
         <el-input v-model="list.college"></el-input>
       </el-form-item>
-      <el-form-item label="联系方式" prop="mobilePhone">
+      <el-form-item  label="联系方式" prop="mobilePhone">
         <el-input v-model="list.mobilePhone"></el-input>
       </el-form-item>
       <el-form-item label="电子邮箱" prop="email" style="margin-left:500px;margin-top:-65px">

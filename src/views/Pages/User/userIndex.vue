@@ -32,11 +32,7 @@
               >面试题库</a
             ></el-menu-item
           >
-
           <el-menu-item index="6">
-            <router-link to="/userIndex/register" class="rou">注册</router-link>
-          </el-menu-item>
-          <el-menu-item index="7">
             <el-dropdown>
               <i
                 class="el-icon-user-solid"

@@ -38,6 +38,9 @@ export const updateJob = p => post('/job/updateJob', p)
 export const exportDefaultTemplateJob = p => getFile('/job/exportDefaultTemplate', p)
 export const exportJob = p => getFile('/job/exportJob', p)
 export const importJob = p => post('/job/importJob', p)
+export const getJobTypeNum = p => get('/job/getJobTypeNum', p)
+export const getWorkPositionNum = p => get('/job/getWorkPositionNum', p)
+
 
 //企业
 export const getCompany = p => get('/company/getCompany', p)
@@ -51,6 +54,7 @@ export const updateCompany = p => post('/company/updateCompany', p)
 export const exportDefaultTemplateCompany = p => getFile('/company/exportDefaultTemplate', p)
 export const exportCompany = p => getFile('/company/exportCompany', p)
 export const importCompany = p => post('/company/importCompany', p)
+export const getCompanyTypeNum = p => get('/company/getCompanyTypeNum', p)
 
 
 //角色权限
