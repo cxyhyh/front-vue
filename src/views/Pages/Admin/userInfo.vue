@@ -187,6 +187,20 @@
             <el-option label="管理员" value="2"></el-option>
           </el-select>
         </el-form-item>
+         <el-form-item
+          label="政治面貌"
+          prop="politicsStatus"
+          :rules="[{ required: true, message: '政治面貌不能为空' }]"
+        >
+          <el-select v-model="form1.politicsStatus" placeholder="请选择政治面貌">
+            <el-option label="中共党员" value="中共党员"></el-option>
+            <el-option label="中共预备党员" value="中共预备党员"></el-option>
+            <el-option label="共青团员" value="共青团员"></el-option>
+            <el-option label="民主党派" value="民主党派"></el-option>
+            <el-option label="无党派人士" value="无党派人士"></el-option>
+             <el-option label="群众" value="群众"></el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item
           label="真实姓名"
           prop="realName"
@@ -336,6 +350,11 @@
             <span>{{ props.row.nature }}</span>
           </template>
         </el-table-column>
+          <el-table-column prop="politicsStatus" label="政治面貌" min-width="60">
+          <template slot-scope="props">
+            <span>{{ props.row.politicsStatus }}</span>
+          </template>
+        </el-table-column>
         <el-table-column prop="education" label="文化程度" min-width="50">
           <template slot-scope="props">
             <span>{{ props.row.education }}</span>
@@ -460,6 +479,9 @@
           <el-form-item label="籍贯">
             <el-input v-model="form.hometown" autocomplete="off"></el-input>
           </el-form-item>
+           <el-form-item label="政治面貌">
+            <el-input v-model="form.politicsStatus" autocomplete="off"></el-input>
+          </el-form-item>
           <el-form-item label="文化程度">
             <el-input v-model="form.education" autocomplete="off"></el-input>
           </el-form-item>
@@ -511,6 +533,7 @@ import {
 } from "../../../request/api";
 import XLSX from "xlsx";
 export default {
+   inject:['reload'],
   name: "userInfo",
   components: {},
   data() {
@@ -550,6 +573,11 @@ export default {
           props: "nature",
           label: "民族",
           width: "60",
+        },
+         {
+          props: "politicsStatus",
+          label: "政治面貌",
+          width: "100",
         },
         {
           props: "idCard",
@@ -610,6 +638,7 @@ export default {
         education: "",
         hometown: "",
         nature: "",
+        politicsStatus:"",
         idCard: "",
         birth: "",
         sex: "",
@@ -627,6 +656,7 @@ export default {
         education: "",
         hometown: "",
         nature: "",
+        politicsStatus:"",
         idCard: "",
         birth: "",
         sex: "",
@@ -649,6 +679,7 @@ export default {
     this.pageUser();
     this.getUserRoleType();
     this.getEducation();
+    this.reload();
   },
   methods: {
     async uploadFile(params) {
@@ -686,6 +717,7 @@ export default {
               rowTable.sex = sheetArray[item].性别;
               rowTable.birth = sheetArray[item].出生日期;
               rowTable.nature = sheetArray[item].民族;
+              rowTable.politicsStatus = sheetArray[item].政治面貌;
               rowTable.idCard = sheetArray[item].身份证号;
               rowTable.hometown = sheetArray[item].籍贯;
               rowTable.mobilePhone = sheetArray[item].联系电话;
@@ -724,6 +756,8 @@ export default {
           } else {
             this.$message.success("导入成功！！");
             this.dialogVisible = false;
+             this.reload();
+
           }
           console.log(res.data);
         })
