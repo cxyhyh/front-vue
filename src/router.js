@@ -1,9 +1,10 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Button from 'ant-design-vue'
-//Home
 import index from './views/Home/index.vue'
 //Admin
+import aside from './components/Breadcrumb/CommonAside.vue'
+import head from './components/Breadcrumb/CommonHeader.vue'
 import ind from './views/Pages/Admin/ind.vue'
 import map from './views/Pages/echarts/map.vue'
 import companyPie from './views/Pages/echarts/companyPie.vue'
@@ -120,10 +121,90 @@ let router = new VueRouter({
             children: [{
                     path: 'userInfo',
                     name: 'userInfo',
-                    component: userInfo,
+                    component:userInfo,
                     meta: {
                         auth: true,
                         role: "admin",
+                        label: "用户信息管理",
+                    },
+                },
+                {
+                    path: 'jobInfo',
+                    name: 'jobInfo',
+                    component: jobInfo,
+                    meta: {
+                        auth: true,
+                        role: "admin",
+                        label: "职位信息管理",
+                    },
+                },
+                {
+                    
+                    path: 'jianLiInfo',
+                    name: 'jianLiInfo',
+                    component: jianLiInfo,
+                    meta: {
+                        auth: true,
+                        role: "admin",
+                        label: "简历信息管理",
+                    },
+                },
+                {
+                    path: 'applicationInfo',
+                    name: 'applicationInfo',
+                    component: applicationInfo,
+                    meta: {
+                        auth: true,
+                        role: "admin",
+                        label: "审核简历管理",
+                    },
+                },
+                {
+                    path: 'companyInfo',
+                    name: 'companyInfo',
+                    component: companyInfo,
+                    meta: {
+                        auth: true,
+                        role: "admin",
+                        label: "企业信息管理",
+                    },
+                },
+                {
+                    path: 'skillInfo',
+                    name: 'skillInfo',
+                    component: skillInfo,
+                    meta: {
+                        auth: true,
+                        role: "admin",
+
+                    },
+                },
+                {
+                    path: 'role',
+                    name: 'role',
+                    component: role,
+                    meta: {
+                        auth: true,
+                        role: "admin",
+
+                    },
+                },
+                {
+                    path: '/aside',
+                    name: 'aside',
+                    component: aside,
+                    meta: {
+                        auth: true,
+                        role: "user",
+                    },
+                },
+                {
+                    path: '/head',
+                    name: 'head',
+                    component: head,
+                    meta: {
+                        auth: true,
+                        role: "user",
                     },
                 },
                 {
@@ -187,63 +268,7 @@ let router = new VueRouter({
                         role: "admin",
                     },
                 },
-                {
-                    path: 'jobInfo',
-                    name: 'jobInfo',
-                    component: jobInfo,
-                    meta: {
-                        auth: true,
-                        role: "admin",
-                    },
-                },
-                {
-                    
-                    path: 'jianLiInfo',
-                    name: 'jianLiInfo',
-                    component: jianLiInfo,
-                    meta: {
-                        auth: true,
-                        role: "admin",
-                    },
-                },
-                {
-                    path: 'applicationInfo',
-                    name: 'applicationInfo',
-                    component: applicationInfo,
-                    meta: {
-                        auth: true,
-                        role: "admin",
-                    },
-                },
-                {
-                    path: 'companyInfo',
-                    name: 'companyInfo',
-                    component: companyInfo,
-                    meta: {
-                        auth: true,
-                        role: "admin",
-                    },
-                },
-                {
-                    path: 'skillInfo',
-                    name: 'skillInfo',
-                    component: skillInfo,
-                    meta: {
-                        auth: true,
-                        role: "admin",
-
-                    },
-                },
-                {
-                    path: 'role',
-                    name: 'role',
-                    component: role,
-                    meta: {
-                        auth: true,
-                        role: "admin",
-
-                    },
-                },
+               
             ]
 
 
@@ -361,6 +386,7 @@ let router = new VueRouter({
 
     ],
 })
+
 router.beforeEach((to, from, next) => {
     if (to.meta.auth && to.meta.role === 'admin') {
         let token = sessionStorage.getItem('token');

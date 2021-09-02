@@ -679,7 +679,7 @@ export default {
     this.pageUser();
     this.getUserRoleType();
     this.getEducation();
-    this.reload();
+    
   },
   methods: {
     async uploadFile(params) {
@@ -713,6 +713,15 @@ export default {
               }
               rowTable.password = sheetArray[item].密码;
               rowTable.roleType = sheetArray[item].用户类型;
+              if(sheetArray[item].用户类型 == "普通用户"){
+                rowTable.typeKey = 0
+              }
+              if(sheetArray[item].用户类型 == "公司用户"){
+                rowTable.typeKey = 1
+              }
+              if(sheetArray[item].用户类型 == "管理员"){
+                rowTable.typeKey = 2
+              }
               rowTable.realName = sheetArray[item].姓名;
               rowTable.sex = sheetArray[item].性别;
               rowTable.birth = sheetArray[item].出生日期;
@@ -756,7 +765,7 @@ export default {
           } else {
             this.$message.success("导入成功！！");
             this.dialogVisible = false;
-             this.reload();
+            this.pageUser();
 
           }
           console.log(res.data);

@@ -2,8 +2,8 @@
   <el-container class="all">
     <el-aside width="200px">
       <div class="elm">
-        <!-- <CommonAside> </CommonAside> -->
-        <el-menu
+        <CommonAside> </CommonAside>
+        <!-- <el-menu
           default-active="1"
           :default-openeds="[]"
           class="el-menu-vertical-demo"
@@ -77,27 +77,30 @@
               >
             </el-menu-item>
           </el-submenu>
-           <el-menu-item index="6">
+          <el-menu-item index="6">
             <router-link to="/home/ind" class="rou" exact>
               <i class="el-icon-s-home" style="color: gold"></i>
               首页</router-link
             >
           </el-menu-item>
-        </el-menu>
+        </el-menu> -->
       </div>
     </el-aside>
     <el-container>
       <el-header style="text-align: right; font-size: 15px">
-        <div class="mbx"></div>
+        <!-- <div class="mbx"></div>
         <div class="qt">
           <span class="sp">校园网上招聘后台管理系统</span>
         </div>
         <div class="tx">
-          <el-dropdown>
-            <i
+          <el-dropdown> -->
+            <!-- <i
               class="el-icon-user-solid"
               style="margin-right: 15px; font-size: 30px; color: white"
-            ></i>
+            ></i> -->
+            <!-- <div>
+              <el-avatar src="http://bpic.588ku.com/element_origin_min_pic/00/85/67/3156e965da25551.jpg"></el-avatar>
+            </div>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item>{{ showUsername }}</el-dropdown-item>
               <el-dropdown-item
@@ -112,13 +115,11 @@
               >
             </el-dropdown-menu>
           </el-dropdown>
-        </div>
-
+        </div> -->
         <div>
-          <!-- <CommonHeader></CommonHeader> -->
+          <CommonHeader></CommonHeader>
         </div>
       </el-header>
-
       <el-main>
         <div></div>
         <div>
@@ -129,6 +130,8 @@
   </el-container>
 </template>
 <script>
+import CommonAside from '../../../components/Breadcrumb/CommonAside.vue' 
+import CommonHeader from '../../../components/Breadcrumb/CommonHeader.vue' 
 import Cookie from "js-cookie";
 export default {
   name: "",
@@ -137,13 +140,17 @@ export default {
       isCollapse: true,
     };
   },
-  components: {},
+  components: {
+    CommonAside,CommonHeader
+  },
   computed: {
     showUsername() {
       return Cookie.get("username");
     },
+    
   },
-  mounted() {},
+  mounted() {
+  },
   methods: {
     handleOpen(key, keyPath) {
       console.log(key, keyPath);
@@ -166,7 +173,7 @@ export default {
 .tx {
   width: 50px;
   margin-left: 1020px;
-  margin-top: -55px;
+  margin-top: -50px;
 }
 .qt {
   width: 200px;

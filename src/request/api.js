@@ -23,6 +23,7 @@ export const importUser = p => post('/user/importUser', p)
 export const editUser = p => post('/user/editUser', p)
 export const updatePassword = p => get('/user/updatePassword', p)
 export const getRoleTypeNum = p => get('/user/getRoleTypeNum', p)
+export const selectPhoto = p => get('/user/selectPhoto', p)
 
 
 //职位
