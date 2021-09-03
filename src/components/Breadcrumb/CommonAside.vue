@@ -141,6 +141,12 @@ export default {
       // 调用store中的tab.js文件定义的selectMenu方法
       this.$store.commit("selectMenu", item);
     },
+     handleOpen(key, keyPath) {
+      console.log(key, keyPath);
+    },
+    handleClose(key, keyPath) {
+      console.log(key, keyPath);
+    },
   },
 };
 </script>
@@ -151,7 +157,7 @@ export default {
 }
 .el-icon-s-unfold{
   color: yellow;
-  margin-left: 50px;
+  margin-left: 175px;
 }
 </style>
 

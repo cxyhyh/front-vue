@@ -133,11 +133,13 @@
 import CommonAside from '../../../components/Breadcrumb/CommonAside.vue' 
 import CommonHeader from '../../../components/Breadcrumb/CommonHeader.vue' 
 import Cookie from "js-cookie";
+import {selectPhoto} from '../../../request/api'
 export default {
   name: "",
   data() {
     return {
       isCollapse: true,
+    
     };
   },
   components: {
@@ -150,18 +152,24 @@ export default {
     
   },
   mounted() {
+    //  this.selectPhoto();
   },
   methods: {
-    handleOpen(key, keyPath) {
-      console.log(key, keyPath);
+    selectPhoto() {
+      selectPhoto({
+        username: Cookie.get("username")
+      })
+        .then((res) => {
+          console.log(res.message);
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
     },
-    handleClose(key, keyPath) {
-      console.log(key, keyPath);
-    },
-    exit() {
-      sessionStorage.clear();
-      console.log(sessionStorage.getItem("token"));
-    },
+    // exit() {
+    //   sessionStorage.clear();
+    //   console.log(sessionStorage.getItem("token"));
+    // },
   },
 };
 </script>

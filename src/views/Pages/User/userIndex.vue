@@ -34,10 +34,9 @@
           >
           <el-menu-item index="6">
             <el-dropdown>
-              <i
-                class="el-icon-user-solid"
-                style="margin-right: 0px; font-size: 25px; color: white"
-              ></i>
+             <div>
+              <el-avatar :src = "bas"></el-avatar>
+            </div>
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item>{{ showUsername }}</el-dropdown-item>
                  <el-dropdown-item
@@ -65,15 +64,19 @@
 
 <script>
 import Cookie from "js-cookie";
+import {selectPhoto} from '../../../request/api'
 export default {
   name: "userIndex",
   components: {},
   data() {
     return {
       activeIndex: "1",
+      bas:""
     };
   },
-  mounted() {},
+  mounted() {
+     this.selectPhoto();
+  },
   computed: {
     showUsername() {
       return Cookie.get("username");
@@ -84,6 +87,20 @@ export default {
       sessionStorage.clear();
       console.log(sessionStorage.getItem("token"));
     },
+     selectPhoto() {
+      selectPhoto({
+        username: Cookie.get("username")
+      })
+        .then((res) => {
+          console.log(res.message);
+          this.bas = res.message;
+          console.log(this.bas)
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
+    },
+     
   },
 };
 </script>

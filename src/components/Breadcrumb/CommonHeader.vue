@@ -26,7 +26,7 @@
         <div class="tx">
           <el-dropdown>
             <div>
-              <el-avatar src="http://bpic.588ku.com/element_origin_min_pic/00/85/67/3156e965da25551.jpg"></el-avatar>
+              <el-avatar :src = "bas"></el-avatar>
             </div>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item>{{ showUsername }}</el-dropdown-item>
@@ -50,6 +50,7 @@
 // 导入vuex状态管理模块
 import { mapState } from "vuex";
 import Cookie from "js-cookie";
+import {selectPhoto} from '../../request/api'
 export default {
   computed: {
     // 获取store下tab.js文件selectMenu方法中currentMenu对象数据
@@ -60,9 +61,14 @@ export default {
       return Cookie.get("username");
     },
   },
+  mounted(){
+    this.selectPhoto();
+  },
   data() {
     return {
-      isCollapse: false
+      isCollapse: false,
+      bas:""
+      
     };
   },
  
@@ -71,12 +77,25 @@ export default {
       this.isCollapse = !this.isCollapse;
       this.$root.Bus.$emit("collapsed-side", this.isCollapse);
     },
-     handleOpen(key, keyPath) {
-      console.log(key, keyPath);
+    
+    exit() {
+      sessionStorage.clear();
+      console.log(sessionStorage.getItem("token"));
     },
-    handleClose(key, keyPath) {
-      console.log(key, keyPath);
+     selectPhoto() {
+      selectPhoto({
+        username: Cookie.get("username")
+      })
+        .then((res) => {
+          console.log(res.message);
+          this.bas = res.message;
+          console.log(this.bas)
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
     },
+     
   },
 };
 </script>
