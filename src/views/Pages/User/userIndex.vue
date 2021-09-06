@@ -47,6 +47,9 @@
                  <el-dropdown-item
               ><router-link to="/edit" class="edit">个人信息</router-link></el-dropdown-item
             >
+             <el-dropdown-item
+              ><span @click="exportUserToWord()">简历生成</span></el-dropdown-item
+            >
                 <el-dropdown-item
                   ><router-link to="/" @click.native="exit" class="exit"
                     >退出登录</router-link
@@ -69,18 +72,20 @@
 
 <script>
 import Cookie from "js-cookie";
-import {selectPhoto} from '../../../request/api'
+import {selectPhoto,exportUserToWord,selectByUsername} from '../../../request/api'
 export default {
   name: "userIndex",
   components: {},
   data() {
     return {
       activeIndex: "1",
-      bas:""
+      bas:"",
+      realName:""
     };
   },
   mounted() {
      this.selectPhoto();
+     this.selectByUsername();
   },
   computed: {
     showUsername() {
@@ -105,7 +110,45 @@ export default {
           console.log(err);
         });
     },
-     
+     selectByUsername() {
+      selectByUsername({
+        username: Cookie.get("username")
+      })
+        .then((res) => {
+          this.realName = res.data.realName;
+          console.log(res)
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
+    },
+     exportUserToWord() {
+      exportUserToWord({
+        username: Cookie.get("username"),
+      })
+        .then((res) => {
+          console.log(res);
+          const blob = new Blob([res]);
+          const fileName = this.realName+"简历.doc";
+          if ("download" in document.createElement("a")) {
+            // 非IE下载
+            const elink = document.createElement("a");
+            elink.download = fileName;
+            elink.style.display = "none";
+            elink.href = URL.createObjectURL(blob);
+            document.body.appendChild(elink);
+            elink.click();
+            URL.revokeObjectURL(elink.href); // 释放URL 对象
+            document.body.removeChild(elink);
+          } else {
+            // IE10+下载
+            navigator.msSaveBlob(blob, fileName);
+          }
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
+    },
   },
 };
 </script>
