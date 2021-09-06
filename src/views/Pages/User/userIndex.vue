@@ -32,7 +32,12 @@
               >面试题库</a
             ></el-menu-item
           >
-          <el-menu-item index="6">
+           <el-menu-item index="6"
+            ><a  target="_blank" class="rou"
+              >消息</a
+            ></el-menu-item
+          >
+          <el-menu-item index="7">
             <el-dropdown>
              <div>
               <el-avatar :src = "bas"></el-avatar>

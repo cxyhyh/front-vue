@@ -43,7 +43,7 @@ import zpLiuC from './views/Pages/Company/zpLiuC.vue'
 Vue.use(Button);
 Vue.use(VueRouter);
 let router = new VueRouter({
-    mode:'history',
+    mode: 'history',
     routes: [{
             path: '/',
             name: 'index',
@@ -91,24 +91,23 @@ let router = new VueRouter({
             meta: {
                 auth: true,
             },
-            children: [
-                {
-                path: 'editUserInfo',
+            children: [{
+                    path: 'editUserInfo',
                     name: 'editUserInfo',
                     component: editUserInfo,
                     meta: {
                         auth: true,
                     },
-            },
-            {
-                path: 'editPassword',
+                },
+                {
+                    path: 'editPassword',
                     name: 'editPassword',
                     component: editPassword,
                     meta: {
                         auth: true,
                     },
-            },
-        ]
+                },
+            ]
         },
         {
             path: '/home',
@@ -121,7 +120,7 @@ let router = new VueRouter({
             children: [{
                     path: 'userInfo',
                     name: 'userInfo',
-                    component:userInfo,
+                    component: userInfo,
                     meta: {
                         auth: true,
                         role: "admin",
@@ -139,7 +138,7 @@ let router = new VueRouter({
                     },
                 },
                 {
-                    
+
                     path: 'jianLiInfo',
                     name: 'jianLiInfo',
                     component: jianLiInfo,
@@ -215,40 +214,39 @@ let router = new VueRouter({
                         auth: true,
                         role: "admin",
                     },
-                    children: [
-                        {
-                        path: 'jobPie',
+                    children: [{
+                            path: 'jobPie',
                             name: 'jobPie',
                             component: jobPie,
                             meta: {
                                 auth: true,
                             },
-                    },
-                    {
-                        path: 'userPie',
+                        },
+                        {
+                            path: 'userPie',
                             name: 'userPie',
                             component: userPie,
                             meta: {
                                 auth: true,
                             },
-                    },
-                    {
-                        path: 'companyPie',
+                        },
+                        {
+                            path: 'companyPie',
                             name: 'companyPie',
                             component: companyPie,
                             meta: {
                                 auth: true,
                             },
-                    },
-                    {
-                        path: 'map',
+                        },
+                        {
+                            path: 'map',
                             name: 'map',
                             component: map,
                             meta: {
                                 auth: true,
                             },
-                    },
-                ]
+                        },
+                    ]
                 },
                 {
                     path: 'success',
@@ -268,7 +266,7 @@ let router = new VueRouter({
                         role: "admin",
                     },
                 },
-               
+
             ]
 
 

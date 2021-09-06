@@ -1,16 +1,14 @@
 <template>
 <div class="el">
-  <i class="el-icon-s-unfold" @click="isC()"></i>
+  <!-- <i class="el-icon-s-unfold" @click="isC()"></i> -->
  <el-menu
     router
     default-active="1"
     class="el-menu-vertical-demo"
     background-color="#5683df"
     text-color="white"
-    @open="handleOpen"
-    @close="handleClose"
-    :collapse="isCollapse"
     active-text-color="gold"
+    :collapse="isCollapse"
   >
     <el-menu-item
       :index="item.path"
@@ -18,7 +16,7 @@
       :key="item.path"
       @click="clickMenu(item)"
     >
-      <i :class="'el-icon-' + item.icon"></i>
+      <i :class="'el-icon-' + item.icon" class="icon"></i>
       <span slot="title">{{ item.label }}</span>
     </el-menu-item>
     <el-submenu
@@ -27,7 +25,7 @@
       :key="index"
     >
       <template slot="title">
-        <i :class="'el-icon-' + item.icon"></i>
+        <i :class="'el-icon-' + item.icon" class="icon"></i>
         <span>{{ item.label }}</span>
       </template>
       <el-menu-item-group>
@@ -47,6 +45,9 @@
 </template>
 
 <script>
+import VerticalToggle from '../../store/VerticalToggle' 
+import Vue from 'vue'
+Vue.component(VerticalToggle.name, VerticalToggle)
 export default {
   computed: {
     // 获取菜单对象中不包含子级的菜单
@@ -65,70 +66,67 @@ export default {
       asideMenu: [
         // 设置子级菜单路由
         {
-          path:"/home",
+          path: '/home/index',
+          name: 'index',
+          label: '可视化分析',
+          icon: 's-home'
+          
+        },
+        {
+          path: "/home",
           label: "信息管理",
           icon: "message",
+          name:"home",
           children: [
             {
-              path: "/home/userInfo",
-              name: "page1",
+              path: "userInfo",
+              name: "userInfo",
               label: "用户信息管理",
+              parentName: 'home',
+              parentLabel: '信息管理',
             },
             {
-              path: "/home/jobInfo",
-              name: "page1",
+              path: "jobInfo",
+              name: "jobInfo",
               label: "职位信息管理",
+              parentName: 'home',
+              parentLabel: '信息管理',
             },
             {
-              path: "/home/companyInfo",
-              name: "page1",
+              path: "companyInfo",
+              name: "companyInfo",
               label: "企业信息管理",
+              parentName: 'home',
+              parentLabel: '信息管理',
             },
             {
-              path: "/home/skillInfo",
-              name: "page2",
+              path: "skillInfo",
+              name: "skillInfo",
               label: "技能信息管理",
+              parentName: 'home',
+              parentLabel: '信息管理',
             },
           ],
         },
         {
-           path:"/home",
-          label: "角色权限",
+          path: "/home/role",
+          label: "角色管理",
           icon: "setting",
-          children: [
-            {
-              path: "/home/role",
-              name: "page1",
-              label: "角色权限管理",
-            },
-          ],
+          name:"role",
         },
         {
-           path:"/home",
           label: "简历管理",
+          path: "/home/jianLiInfo",
           icon: "document",
-          children: [
-            {
-              path: "/home/jianLiInfo",
-              name: "page1",
-              label: "简历信息管理",
-            },
-          ],
+          name:"jianLiInfo",
         },
         {
-           path:"/home",
           label: "审核管理",
           icon: "help",
-          children: [
-            {
-              path: "/home/applicationInfo",
-              name: "page1",
-              label: "审核简历管理",
-            },
-          ],
+          path: "/home/applicationInfo",
+          name:"applicationInfo",
         },
       ],
-      commit: [],
       state: "",
     };
   },
@@ -141,23 +139,28 @@ export default {
       // 调用store中的tab.js文件定义的selectMenu方法
       this.$store.commit("selectMenu", item);
     },
-     handleOpen(key, keyPath) {
-      console.log(key, keyPath);
-    },
-    handleClose(key, keyPath) {
-      console.log(key, keyPath);
-    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
 .el {
- margin-top: -26px;
+ margin-top: -2px;
 }
 .el-icon-s-unfold{
   color: yellow;
-  margin-left: 175px;
+  margin-left: 20px;
 }
+.el-menu-vertical-demo:not(.el-menu--collapse) {
+    width: auto;
+    min-height: 400px;
+  }
+.el-menu{
+    border: none;
+  }
+.icon{
+    color: gold;
+    font-size: 20px;
+  }
 </style>
 

@@ -1,20 +1,17 @@
 <template>
 <div>
     <div class="l-content">
-      <!-- sezi设置按钮尺寸 -->
-      <!-- <el-button
-        type="primary"
-        icon="el-icon-menu"
-        size="mini"
-        @click="isC"
-      ></el-button> -->
       <!-- 设置面包屑 -->
-      <el-breadcrumb separator="/">
+      <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item :to="{ path: '/home/index' }"
           >首页</el-breadcrumb-item
         >
         <!-- 通过判断current是否为null设置面包屑是否显示菜单名称 -->
-        <el-breadcrumb-item :to="current.path" v-if="current">
+        <el-breadcrumb-item v-if="current.parentName">
+          <!-- 从计算属性的current中获取用户点击菜单的label，然后在面包屑中展示该菜单的label -->
+          {{ current.parentLabel }}
+        </el-breadcrumb-item>
+        <el-breadcrumb-item :to="{name: current.name}" v-if="current">
           <!-- 从计算属性的current中获取用户点击菜单的label，然后在面包屑中展示该菜单的label -->
           {{ current.label }}
         </el-breadcrumb-item>
@@ -67,8 +64,7 @@ export default {
   data() {
     return {
       isCollapse: false,
-      bas:""
-      
+      bas:""  
     };
   },
  
@@ -77,7 +73,6 @@ export default {
       this.isCollapse = !this.isCollapse;
       this.$root.Bus.$emit("collapsed-side", this.isCollapse);
     },
-    
     exit() {
       sessionStorage.clear();
       console.log(sessionStorage.getItem("token"));
@@ -99,7 +94,6 @@ export default {
   },
 };
 </script>
-
 <style lang="scss" scoped>
 .rou {
   text-decoration: none;
@@ -137,21 +131,7 @@ export default {
   height: 30px;
   margin-left: -20px;
   margin-top: 28px;
-  
 }
 </style>
-<style lang="scss">
-.el-breadcrumb__item {
-  // 设置面包屑首页样式
-  .el-breadcrumb__inner {
-    color: #fff;
-  }
-  // 设置面包屑首页后面菜单样式
-  &:last-child {
-    .el-breadcrumb__inner {
-      color: #f4f4f4;
-    }
-  }
-}
-</style>
+
 

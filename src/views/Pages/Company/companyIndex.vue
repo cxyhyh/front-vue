@@ -24,20 +24,33 @@
             </router-link></el-menu-item
           >
           <el-menu-item index="5">
+            <el-dropdown trigger="click">
+              <span class="rou">消息</span>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item class="clearfix">
+                  评论
+                  <el-badge class="mark" :value="12" />
+                </el-dropdown-item>
+                <el-dropdown-item class="clearfix">
+                  回复
+                  <el-badge class="mark" :value="3" />
+                </el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+          </el-menu-item>
+
+          <el-menu-item index="6">
             <el-dropdown>
-             <div>
-              <el-avatar :src = "bas"></el-avatar>
-            </div>
+              <div>
+                <el-avatar :src="bas"></el-avatar>
+              </div>
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item>{{ showUsername }}</el-dropdown-item>
-                <el-dropdown-item>
-                  <el-badge :value=a class="item">
-                    消息
-</el-badge>
-                  </el-dropdown-item>
-                 <el-dropdown-item
-              ><router-link to="/edit" class="edit">个人信息</router-link></el-dropdown-item
-            >
+                <el-dropdown-item
+                  ><router-link to="/edit" class="edit"
+                    >个人信息</router-link
+                  ></el-dropdown-item
+                >
                 <el-dropdown-item
                   ><router-link to="/" @click.native="exit" class="exit"
                     >退出登录</router-link
@@ -59,14 +72,14 @@
 
 <script>
 import Cookie from "js-cookie";
-import {selectPhoto} from '../../../request/api'
+import { selectPhoto } from "../../../request/api";
 export default {
   name: "userIndex",
   components: {},
   data() {
     return {
-      a:12,
-      bas:""
+      a: 12,
+      bas: "",
     };
   },
   mounted() {
@@ -82,14 +95,14 @@ export default {
       sessionStorage.clear();
       console.log(sessionStorage.getItem("token"));
     },
-      selectPhoto() {
+    selectPhoto() {
       selectPhoto({
-        username: Cookie.get("username")
+        username: Cookie.get("username"),
       })
         .then((res) => {
           console.log(res.message);
           this.bas = res.message;
-          console.log(this.bas)
+          console.log(this.bas);
         })
         .catch(function (err) {
           console.log(err);
@@ -142,10 +155,10 @@ export default {
   display: inline-block;
   padding: 0 25px;
 }
-.edit{
+.edit {
   text-decoration: none;
 }
-.exit{
+.exit {
   text-decoration: none;
 }
 </style>

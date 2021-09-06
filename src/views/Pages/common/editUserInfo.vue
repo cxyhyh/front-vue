@@ -9,7 +9,7 @@
           <el-input :disabled="true" v-model="list.password"></el-input>
         </el-form-item>
         <div class="tx">
-          <el-avatar :src="list.bas" :size="120"></el-avatar>
+          <el-avatar :src="bas" :size="120"></el-avatar>
         </div>
         <div class="bt">
           <el-upload
@@ -108,8 +108,9 @@ export default {
         birth: "",
         sex: "",
         realName: "",
-        bas: "",
+       
       },
+       bas: "",
      
     };
   },
@@ -157,7 +158,7 @@ export default {
       })
         .then((res) => {
           console.log(res.message);
-          this.list.bas = res.message;
+          this.bas = res.message;
           console.log(this.list.bas);
         })
         .catch(function (err) {
