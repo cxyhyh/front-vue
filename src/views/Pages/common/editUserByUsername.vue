@@ -10,7 +10,7 @@
           background-color="#5683df"
          text-color="white"
         >
-        <el-button @click="back()" size="small">返回</el-button>   
+         <router-link to="/home"> <el-button size="small">返回 </el-button></router-link>
          <el-menu-item index="1">
               <router-link to="/edit/editUserInfo" class="rou"
                 >个人信息</router-link

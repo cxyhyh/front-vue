@@ -3,13 +3,17 @@ import VueRouter from 'vue-router'
 import Button from 'ant-design-vue'
 import index from './views/Home/index.vue'
 //Admin
+import daping from '../src/views/Pages/Admin/daping.vue'
 import aside from './components/Breadcrumb/CommonAside.vue'
 import head from './components/Breadcrumb/CommonHeader.vue'
-import ind from './views/Pages/Admin/ind.vue'
 import map from './views/Pages/echarts/map.vue'
 import companyPie from './views/Pages/echarts/companyPie.vue'
 import userPie from './views/Pages/echarts/userPie.vue'
 import jobPie from './views/Pages/echarts/jobPie.vue'
+import daPingMap from './views/Pages/daping/map.vue'
+import daPingCompanyPie from './views/Pages/daping/companyPie.vue'
+import daPingUserPie from './views/Pages/daping/userPie.vue'
+import daPingJobPie from './views/Pages/daping/jobPie.vue'
 import adminIndex from './views/Pages/Admin/index.vue'
 import companyInfo from './views/Pages/Admin/companyInfo.vue'
 import home from './views/Pages/Admin/home.vue'
@@ -69,6 +73,49 @@ let router = new VueRouter({
                 auth: true,
 
             },
+        },
+        {
+            path: '/daping',
+            name: 'daping',
+            component: daping,
+            meta: {
+                auth: true,
+
+            },
+            children: [
+                {
+                path: 'daPingMap',
+                name: 'daPingMap',
+                component: daPingMap,
+                meta: {
+                    auth: true,
+                },
+            },
+            {
+                path: 'daPingCompanyPie',
+                name: 'daPingCompanyPie',
+                component: daPingCompanyPie,
+                meta: {
+                    auth: true,
+                },
+            },
+            {
+                path: 'daPingUserPie',
+                name: 'daPingUserPie',
+                component: daPingUserPie,
+                meta: {
+                    auth: true,
+                },
+            },
+            {
+                path: 'daPingJobPie',
+                name: 'daPingJobPie',
+                component: daPingJobPie,
+                meta: {
+                    auth: true,
+                },
+            },
+        ]
         },
         {
             path: '/detail/:id',
@@ -252,15 +299,6 @@ let router = new VueRouter({
                     path: 'success',
                     name: 'success',
                     component: success,
-                    meta: {
-                        auth: true,
-                        role: "admin",
-                    },
-                },
-                {
-                    path: 'ind',
-                    name: 'ind',
-                    component: ind,
                     meta: {
                         auth: true,
                         role: "admin",

@@ -111,7 +111,7 @@ export default {
             if (role == "普通用户") {
               this.$router.push({ path: "/userIndex/logo" });
             } else if (role == "管理员") {
-              this.$router.push({ path: "/home" });
+              this.$router.push({ path: "/daping" });
             }else if (role == "公司用户") {
               this.$router.push({ path: "/companyIndex/logo1" });
             }

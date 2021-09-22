@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <div style="width: 450x; height: 500px" id="echarts1"></div>
+      <div style="width: 200x; height: 300px" id="echarts1"></div>
     </div>
   </div>
 </template>
@@ -28,15 +28,29 @@ export default {
           var myChart = echarts.init(document.getElementById("echarts1"));
           // 指定图表的配置项和数据
           var option = {
-            backgroundColor: "#45515a",
-            color: ['#e4590d', '#ffb400', '#5ad01c', '#00aeff','yellow','#ff7d27','#228b22','#57a2fd', '#47b73d', '#fcc36e','purple','orange','gold','red'],
-            //标题
+            color: [
+              "#e4590d",
+              "#ffb400",
+              "#5ad01c",
+              "#00aeff",
+              "yellow",
+              "#ff7d27",
+              "#228b22",
+              "#57a2fd",
+              "#47b73d",
+              "#fcc36e",
+              "purple",
+              "orange",
+              "gold",
+              "red",
+            ],
+
             title: {
               text: "企业类型统计可视化",
               left: "center",
               top: 20,
               textStyle: {
-                color: "yellow",
+                color: "white",
                 fontStyle: "italic", //标题字体
               },
             },
@@ -49,34 +63,11 @@ export default {
             //图例
             legend: {
               orient: "horizontal",
-              bottom: 10,
+              bottom: -5,
               textStyle: {
                 color: "white",
               },
             },
-            //饼图中各模块的颜色
-            toolbox: {
-              show: true, //显示工具箱
-              feature: {
-                dataView: { show: true }, //以文字形式显示数据
-                restore: { show: true }, //还原
-                //dataZoom:{show:true}, //区域缩放
-                saveAsImage: { show: true }, //保存图片
-                //magicType:{type:['line','bar']}//动态数据切换，数据显示可以在该规定内容中切换显示方式，
-              },
-            },
-            // visualMap: {
-            //   show: false,
-            //   min: 1,
-            //   max: 20,
-            //   realtime: true,
-            //   dimension: 2,
-            //   // inRange: {
-            //   //   //选定了要映射的对象，用inRange详细写要渲染的具体细节，[x，y]中x指最小值对应的量（亮度，饱和度等），y指最大值对应的量，其余的按各自value线性渲染
-            //   //   color: "orange",
-            //   //   // colorSaturation: [0, 1],
-            //   // },
-            // },
             // 饼图数据
             series: {
               name: "企业类型信息",
@@ -96,17 +87,6 @@ export default {
                   textStyle: {
                     color: "white",
                   },
-                },
-              },
-              labelLine: {
-                //引导线样式
-                normal: {
-                  lineStyle: {
-                    color: "rgba(255, 255, 255, 0.3)",
-                  },
-                  smooth: 0.2, //0-1，越大越平滑弯曲
-                  length: 10, //从块到文字的第一段长
-                  length2: 20, //拐弯到文字的段长
                 },
               },
               itemStyle: {

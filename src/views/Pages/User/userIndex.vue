@@ -32,24 +32,29 @@
               >面试题库</a
             ></el-menu-item
           >
-           <el-menu-item index="6"
-            ><a  target="_blank" class="rou"
-              >消息</a
-            ></el-menu-item
+          <el-menu-item index="6"
+            ><a target="_blank" class="rou">消息</a></el-menu-item
           >
           <el-menu-item index="7">
             <el-dropdown>
-             <div>
-              <el-avatar :src = "bas"></el-avatar>
-            </div>
+              <div>
+                <el-avatar :src="bas"></el-avatar>
+              </div>
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item>{{ showUsername }}</el-dropdown-item>
-                 <el-dropdown-item
-              ><router-link to="/edit" class="edit">个人信息</router-link></el-dropdown-item
-            >
-             <el-dropdown-item
-              ><span @click="exportUserToWord()">简历生成</span></el-dropdown-item
-            >
+                <el-dropdown-item
+                  ><router-link to="/edit" class="edit"
+                    >个人信息</router-link
+                  ></el-dropdown-item
+                >
+                <el-dropdown-item
+                  ><span @click="exportUserToWord()"
+                    >简历生成</span
+                  ></el-dropdown-item
+                >
+                <el-dropdown-item
+                  ><span @click="kkFile()">简历预览</span></el-dropdown-item
+                >
                 <el-dropdown-item
                   ><router-link to="/" @click.native="exit" class="exit"
                     >退出登录</router-link
@@ -72,20 +77,24 @@
 
 <script>
 import Cookie from "js-cookie";
-import {selectPhoto,exportUserToWord,selectByUsername} from '../../../request/api'
+import {
+  selectPhoto,
+  exportUserToWord,
+  selectByUsername,
+} from "../../../request/api";
 export default {
   name: "userIndex",
   components: {},
   data() {
     return {
       activeIndex: "1",
-      bas:"",
-      realName:""
+      bas: "",
+      realName: "",
     };
   },
   mounted() {
-     this.selectPhoto();
-     this.selectByUsername();
+    this.selectPhoto();
+    this.selectByUsername();
   },
   computed: {
     showUsername() {
@@ -97,39 +106,51 @@ export default {
       sessionStorage.clear();
       console.log(sessionStorage.getItem("token"));
     },
-     selectPhoto() {
+    kkFile() {
+      const name =  Cookie.get("username");
+      //const fileName = this.realName + "简历.doc";
+      var originUrl = 'http://localhost:8080/user/exportUserToWord?username=' + name; //要预览文件的访问地址（可以是下载地址）
+      //var previewUrl = originUrl + '&fullfilename=' + fileName; //要预览文件的名字（可选择使用，不是必填项）
+      // previewUrl.replaceAll("+","%2B"); 
+      // originUrl.replaceAll("+","%2B")
+      window.open(
+        'http://localhost:8012/onlinePreview?url=' +
+          encodeURIComponent(originUrl)
+      ); //地址记得转码
+    },
+    selectPhoto() {
       selectPhoto({
-        username: Cookie.get("username")
+        username: Cookie.get("username"),
       })
         .then((res) => {
           console.log(res.message);
           this.bas = res.message;
-          console.log(this.bas)
+          console.log(this.bas);
         })
         .catch(function (err) {
           console.log(err);
         });
     },
-     selectByUsername() {
+    selectByUsername() {
       selectByUsername({
-        username: Cookie.get("username")
+        username: Cookie.get("username"),
       })
         .then((res) => {
           this.realName = res.data.realName;
-          console.log(res)
+          console.log(res);
         })
         .catch(function (err) {
           console.log(err);
         });
     },
-     exportUserToWord() {
+    exportUserToWord() {
       exportUserToWord({
         username: Cookie.get("username"),
       })
         .then((res) => {
           console.log(res);
           const blob = new Blob([res]);
-          const fileName = this.realName+"简历.doc";
+          const fileName = this.realName + "简历.doc";
           if ("download" in document.createElement("a")) {
             // 非IE下载
             const elink = document.createElement("a");
@@ -198,10 +219,10 @@ export default {
   display: inline-block;
   padding: 0 20px;
 }
-.edit{
+.edit {
   text-decoration: none;
 }
-.exit{
+.exit {
   text-decoration: none;
 }
 </style>
