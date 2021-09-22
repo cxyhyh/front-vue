@@ -11,20 +11,21 @@
         <div class="tx">
           <el-avatar :src="bas" :size="120"></el-avatar>
         </div>
-        <div class="bt">
+        <div class="a"></div>
+        <!-- <div class="bt">
           <el-upload
-            action=""
+            action="http://localhost:8080/file/upload"
             multiple
             :limit="1"
             :show-file-list="false"
           >
           <el-button type="primary" size="mini">更换</el-button>
           </el-upload>
-        </div>
+        </div> -->
         <el-form-item
           label="真实姓名"
           prop="realName"
-          style="margin-top: -37px"
+          style="margin-top: -5px"
         >
           <el-input :disabled="true" v-model="list.realName"></el-input>
         </el-form-item>
@@ -83,11 +84,21 @@
     <div>
       <el-button style="margin-left: 30px" @click="editUser()">修改</el-button>
     </div>
+     <div class="bt1">
+          <el-upload
+            action="http://localhost:8080/user/updatePhoto"
+            multiple
+            :on-success="suc"
+            :show-file-list="false"
+          >
+          <el-button type="primary" size="mini">更换</el-button>
+          </el-upload>
+        </div>
   </div>
 </template>
 
 <script>
-import { selectByName, editUser, selectPhoto } from "../../../request/api";
+import { selectByName, editUser, selectPhoto,updateByUsername} from "../../../request/api";
 import Cookie from "js-cookie";
 export default {
   inject: ["reload"],
@@ -111,6 +122,7 @@ export default {
        
       },
        bas: "",
+       dir:""
      
     };
   },
@@ -165,6 +177,26 @@ export default {
           console.log(err);
         });
     },
+     updateByUsername() {
+      updateByUsername({
+        username: Cookie.get("username"),
+        dir:this.dir,
+      })
+        .then((res) => {
+          console.log(res.message);
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
+    },
+    suc(response, file){
+      
+      this.name = file.name;
+      this.dir = "F:\\upload\\"+this.name;
+      console.log(this.name);
+      this.updateByUsername();
+      this.selectPhoto();
+    },
   },
 };
 </script>
@@ -180,7 +212,12 @@ export default {
   font-size: 18px !important;
   font-family: cursive !important;
 }
-.bt {
+.bt1 {
+  width: 55px;
+  margin-left: 730px;
+  margin-top: -390px;
+}
+.a{
   width: 60px;
   margin-left: 730px;
   margin-top: 20px;
