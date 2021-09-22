@@ -31,6 +31,7 @@ export default {
         let echarts1_option = {
         //需要的话下面内容copy到主体代码块即可
         backgroundColor: "#45515a",
+         color: ['#ff7d27','#228b22','#57a2fd', '#47b73d', '#fcc36e', 'yellow','purple','orange','gold','red' ],
         //标题
         title: {
           text: "用户类型统计可视化",
@@ -70,19 +71,19 @@ export default {
           },
         },
         //视觉映射组件，将数据映射到视觉元素上
-        visualMap: {
-          show: false,
-          min: 1,
-          max: 20,
-          realtime: true,
-          dimension: 2, 
-          inRange: {
-            //选定了要映射的对象，用inRange详细写要渲染的具体细节，[x，y]中x指最小值对应的量（亮度，饱和度等），y指最大值对应的量，其余的按各自value线性渲染
-            color:"rgb(202, 44, 44)"
-           
-            // colorSaturation: [0, 1],
-          },
-        },
+        // visualMap: {
+        //   show: false,
+        //   min: 1,
+        //   max: 20,
+        //   realtime: true,
+        //   dimension: 2, 
+        //   inRange: {
+        //     //选定了要映射的对象，用inRange详细写要渲染的具体细节，[x，y]中x指最小值对应的量（亮度，饱和度等），y指最大值对应的量，其余的按各自value线性渲染
+        //     color:"rgb(202, 44, 44)"
+        //     // colorSaturation: [0, 1],
+        //   },
+
+        // },
         //数据
         series: [
           {
@@ -114,9 +115,8 @@ export default {
             },
             itemStyle: {
               //图例样式
-              normal: {
-                   
-                color: "purple",
+              normal: {                   
+                // color: "purple",
                 shadowBlur: 200, //阴影模糊程度
                 shadowColor: "rgba(0, 0, 0, 0.5)", //阴影颜色，一般黑
               },

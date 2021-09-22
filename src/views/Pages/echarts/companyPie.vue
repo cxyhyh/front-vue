@@ -29,7 +29,7 @@ export default {
           // 指定图表的配置项和数据
           var option = {
             backgroundColor: "#45515a",
-            color: ["#e4590d", "#ffb400", "#5ad01c", "#00aeff"],
+            color: ['#e4590d', '#ffb400', '#5ad01c', '#00aeff','yellow','#ff7d27','#228b22','#57a2fd', '#47b73d', '#fcc36e','purple','orange','gold','red'],
             //标题
             title: {
               text: "企业类型统计可视化",
@@ -65,18 +65,18 @@ export default {
                 //magicType:{type:['line','bar']}//动态数据切换，数据显示可以在该规定内容中切换显示方式，
               },
             },
-            visualMap: {
-              show: false,
-              min: 1,
-              max: 20,
-              realtime: true,
-              dimension: 2,
-              inRange: {
-                //选定了要映射的对象，用inRange详细写要渲染的具体细节，[x，y]中x指最小值对应的量（亮度，饱和度等），y指最大值对应的量，其余的按各自value线性渲染
-                color: "orange",
-                // colorSaturation: [0, 1],
-              },
-            },
+            // visualMap: {
+            //   show: false,
+            //   min: 1,
+            //   max: 20,
+            //   realtime: true,
+            //   dimension: 2,
+            //   // inRange: {
+            //   //   //选定了要映射的对象，用inRange详细写要渲染的具体细节，[x，y]中x指最小值对应的量（亮度，饱和度等），y指最大值对应的量，其余的按各自value线性渲染
+            //   //   color: "orange",
+            //   //   // colorSaturation: [0, 1],
+            //   // },
+            // },
             // 饼图数据
             series: {
               name: "企业类型信息",
