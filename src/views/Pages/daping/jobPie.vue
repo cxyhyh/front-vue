@@ -56,7 +56,7 @@ export default {
         series: {
           name: '职位类型信息',
           type: "pie", //echarts图的类型   pie代表饼图
-          radius: "55%", //饼图中饼状部分的大小所占整个父元素的百分比
+          radius: "50%", //饼图中饼状部分的大小所占整个父元素的百分比
           center: ["50%", "50%"], //整个饼图在整个父元素中的位置
           roseType: "radius", //角度和半径展现百分比，'area'只用半径展现
              //饼图数据

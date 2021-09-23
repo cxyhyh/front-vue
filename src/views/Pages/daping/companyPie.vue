@@ -62,8 +62,9 @@ export default {
             },
             //图例
             legend: {
-              orient: "horizontal",
-              bottom: -5,
+              orient: "vertical",
+              left:290,
+              top:80,
               textStyle: {
                 color: "white",
               },
@@ -73,9 +74,9 @@ export default {
               name: "企业类型信息",
               type: "pie", //echarts图的类型   pie代表饼图
               // radius: "55%", //饼图中饼状部分的大小所占整个父元素的百分比
-              center: ["50%", "50%"], //整个饼图在整个父元素中的位置
+              center: ["40%", "50%"], //整个饼图在整个父元素中的位置
               roseType: "radius",
-              radius: ["50%", "60%"],
+              radius: ["40%", "30%"],
               avoidLabelOverlap: true, //角度和半径展现百分比，'area'只用半径展现
               //饼图数据
               data: this.company,
@@ -91,8 +92,8 @@ export default {
               },
               itemStyle: {
                 normal: {
-                  borderColor: "#fff",
-                  borderWidth: 3,
+                  borderColor: "white",
+                  borderWidth: 5,
                 },
                 animationType: "scale", //初始动画效果，scale是缩放，expansion是展开
                 animationEasing: "elasticOut", //初始动画缓动效果
