@@ -18,7 +18,7 @@
       </el-breadcrumb>
     </div>
         <div class="qt">
-          <span class="sp">校园网上招聘后台管理系统</span>
+          <span class="sp"><router-link class="tt" to="/daping">校园网上招聘后台管理系统</router-link></span>
         </div>
         <div class="tx">
           <el-dropdown>
@@ -95,6 +95,10 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.tt{
+   text-decoration: none;
+    color: gold;
+}
 .rou {
   text-decoration: none;
   color: gold;

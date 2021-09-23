@@ -2,7 +2,7 @@
   <div>
     <div>
       <div>
-        <div style="width: 100%; height: 626px" id="china"></div>
+        <div style="width: 1000px; height: 560px" id="china"></div>
       </div>
     </div>
   </div>
