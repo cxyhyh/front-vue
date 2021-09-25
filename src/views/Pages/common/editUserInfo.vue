@@ -2,87 +2,77 @@
   <div>
     <div>
       <el-form :model="list" label-width="100px" class="demo-ruleForm">
-        <el-form-item label="用户名" prop="username">
+        <el-form-item label="用户名" prop="username"  style="margin-left: 300px;">
           <el-input v-model="list.username"></el-input>
         </el-form-item>
-        <el-form-item label="密码" prop="password">
+        <el-form-item label="密码" prop="password" style="margin-left: 300px;">
           <el-input :disabled="true" v-model="list.password"></el-input>
         </el-form-item>
         <div class="tx">
           <el-avatar :src="bas" :size="120"></el-avatar>
         </div>
         <div class="a"></div>
-        <!-- <div class="bt">
-          <el-upload
-            action="http://localhost:8080/file/upload"
-            multiple
-            :limit="1"
-            :show-file-list="false"
-          >
-          <el-button type="primary" size="mini">更换</el-button>
-          </el-upload>
-        </div> -->
         <el-form-item
           label="真实姓名"
           prop="realName"
-          style="margin-top: -5px"
+          style="margin-top: -5px; margin-left: 300px;"
         >
           <el-input :disabled="true" v-model="list.realName"></el-input>
         </el-form-item>
-        <el-form-item label="性别" prop="sex">
+        <el-form-item label="性别" prop="sex" style="margin-left: 300px;">
           <el-input :disabled="true" v-model="list.sex"> </el-input>
         </el-form-item>
         <el-form-item
           label="名族"
           prop="nature"
-          style="margin-left: 500px; margin-top: -65px"
+          style="margin-left: 800px; margin-top: -65px"
         >
           <el-input :disabled="true" v-model="list.nature"></el-input>
         </el-form-item>
-        <el-form-item label="出生日期" prop="birth">
+        <el-form-item label="出生日期" prop="birth" style="margin-left: 300px;">
           <el-input :disabled="true" v-model="list.birth"> </el-input>
         </el-form-item>
         <el-form-item
           label="身份证号码"
           prop="idCard"
-          style="margin-left: 500px; margin-top: -65px"
+          style="margin-left: 800px; margin-top: -65px"
         >
           <el-input :disabled="true" v-model="list.idCard"></el-input>
         </el-form-item>
-        <el-form-item label="文化程度" prop="education">
+        <el-form-item label="文化程度" prop="education" style="margin-left: 300px;">
           <el-input v-model="list.education"> </el-input>
         </el-form-item>
         <el-form-item
           label="籍贯"
           prop="hometown"
-          style="margin-left: 500px; margin-top: -65px"
+          style="margin-left: 800px; margin-top: -65px"
         >
           <el-input :disabled="true" v-model="list.hometown"></el-input>
         </el-form-item>
-        <el-form-item label="联系方式" prop="mobilePhone">
+        <el-form-item label="联系方式" prop="mobilePhone" style="margin-left: 300px;">
           <el-input v-model="list.mobilePhone"></el-input>
         </el-form-item>
         <el-form-item
           label="所属院校"
           prop="college"
-          style="margin-left: 500px; margin-top: -65px"
+          style="margin-left: 800px; margin-top: -65px"
         >
           <el-input v-model="list.college"></el-input>
         </el-form-item>
-        <el-form-item label="现住址" prop="address">
+        <el-form-item label="现住址" prop="address" style="margin-left: 300px;">
           <el-input v-model="list.address"></el-input>
         </el-form-item>
         <el-form-item
           label="电子邮箱"
           prop="email"
-          style="margin-left: 500px; margin-top: -65px"
+          style="margin-left: 800px; margin-top: -65px"
         >
           <el-input v-model="list.email"></el-input>
         </el-form-item>
       </el-form>
     </div>
     <div>
-      <el-button style="margin-left: 30px" @click="editUser()">修改</el-button>
+      <el-button style="margin-left: 1130px" @click="editUser()">修改</el-button>
     </div>
      <div class="bt1">
           <el-upload
@@ -204,7 +194,7 @@ export default {
 .tx {
   width: 100px;
   height: 100px;
-  margin-left: 700px;
+  margin-left: 1000px;
   margin-top: -120px;
 }
 .el-input {
@@ -214,7 +204,7 @@ export default {
 }
 .bt1 {
   width: 55px;
-  margin-left: 730px;
+  margin-left: 1030px;
   margin-top: -390px;
 }
 .a{

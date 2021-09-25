@@ -1,14 +1,6 @@
 <template>
   <div>
-    <div>
-      <div class="pie">
-        <div id="pie1">
-          <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
-          <!-- <div id="main1"></div> -->
-        </div>
-      </div>
-    </div>
-		<!-- <div class= "zzt" style="" ref="chart"></div> -->
+     
     <div class="filter-container">
       <el-select
         v-model="companys.companyName"
@@ -167,7 +159,6 @@
   </div>
 </template>
 <script>
-let echarts = require("echarts/lib/echarts");
 require("echarts/theme/shine");
 // 引入饼状图组件
 require("echarts/lib/chart/pie");
@@ -225,66 +216,8 @@ export default {
     this.getLocation();
   },
   methods: {
-    initCharts(){
-		// 基于准备好的dom，初始化echarts实例
-		let myChart = echarts.init(this.$refs.chart);
-		// 绘制图表
-		myChart.setOption({
-			title: { text: '企业信息柱状图' },
-			tooltip: {},
-			xAxis: {
-			data: ["互联网","房地产","生物医药","车企","金融"]
-			},
-			yAxis: {},
-			series: [{
-			name: '企业数量',
-			type: 'bar',
-			data: [6, 6, 6, 6, 6]
-			}]
-			});
-		},
-    initData() {
-      // 基于准备好的dom，初始化echarts实例
-      var myChart = echarts.init(document.getElementById("main1"));
-      // 绘制图表
-      myChart.setOption({
-        title: {
-          text: "企业信息饼状图", //主标题
-          x: "center", //x轴方向对齐方式
-        },
-        tooltip: {
-          trigger: "item",
-          formatter: "{a} <br/>{b} : {c} ({d}%)",
-        },
-        legend: {
-          orient: "vertical",
-          bottom: "bottom",
-          data: ["互联网", "房地产", "生物医药", "车企", "金融"],
-        },
-        series: [
-          {
-            name: "访问来源",
-            type: "pie",
-            radius: "55%",
-            center: ["50%", "60%"],
-            data: [
-              { value: 6, name: "互联网" },
-              { value: 6, name: "房地产" },
-              { value: 6, name: "生物医药" },
-              { value: 6, name: "车企" },
-              { value: 6, name: "金融" },
-            ],
-            itemStyle: {
-              emphasis: {
-                shadowBlur: 10,
-                shadowOffsetX: 0,
-                shadowColor: "rgba(0, 0, 0, 0.5)",
-              },
-            },
-          },
-        ],
-      });
-    },
+    
+  
     toogleExpand(row) {
       const $table = this.$refs.data;
       this.list.map((item) => {

@@ -1,18 +1,17 @@
 <template>
   <el-container class="all">
-    <el-aside style="width:200px">
+    <el-aside style="width:250px; foont-size:20px">
       <div class="elm">
         <CommonAside> </CommonAside>
       </div>
     </el-aside>
     <el-container>
-      <el-header style="text-align: right; font-size: 15px">
+      <el-header style="text-align: right; font-size: 20px">
         <div>
           <CommonHeader></CommonHeader>
         </div>
       </el-header>
       <el-main>
-        <div></div>
         <div>
           <router-view></router-view>
         </div>
@@ -66,28 +65,9 @@ export default {
 </script>
 
 <style scoped>
-.sy {
-  color: white;
-}
-.tx {
-  width: 50px;
-  margin-left: 1020px;
-  margin-top: -50px;
-}
-.qt {
-  width: 200px;
-  margin-left: 450px;
-  margin-top: -40px;
-}
-.mbx {
-  width: 350px;
-  margin-top: 38px;
-  margin-left: -20px;
-  font-size: 20px;
-}
 .all {
-  height: 626px;
-  width: 1298px;
+ height: 990px;
+  width: 1928px;
   margin-left: -8px;
   margin-top: -8px;
   margin-bottom: -18px;
@@ -98,27 +78,16 @@ export default {
 .el-header {
   background-color: #5683df;
   line-height: 60px;
+  
 }
 .el-aside {
   background-color: #5683df;
   
+  
 }
 .elm {
   margin-top: 60px;
+  font-size: 20px;
 }
-.sp {
-  margin-left: -10px;
-  font-size: 17px;
-  color: gold;
-}
-.rou {
-  text-decoration: none;
-  color: gold;
-}
-.edit {
-  text-decoration: none;
-}
-.exit {
-  text-decoration: none;
-}
+
 </style>

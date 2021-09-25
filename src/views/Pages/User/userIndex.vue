@@ -195,8 +195,8 @@ export default {
   /* background-image: url("../../assets/a.jpg"); */
 }
 .el-container {
-  height: 626px;
-  width: 1298px;
+   height: 975px;
+  width: 1928px;
   margin-left: -8px;
   margin-top: -8px;
   margin-bottom: -18px;
@@ -208,7 +208,7 @@ export default {
   font-size: 28px;
 }
 .el-menu-demo {
-  margin-left: 670px;
+  margin-left: 1300px;
   font-size: 30px;
   padding-left: 0;
   padding-right: 0;

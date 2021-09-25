@@ -10,7 +10,7 @@
           background-color="#5683df"
          text-color="white"
         >
-         <router-link to="/home"> <el-button size="small">返回 </el-button></router-link>
+        <el-button size="small" @click="back()">返回 </el-button>
          <el-menu-item index="1">
               <router-link to="/edit/editUserInfo" class="rou"
                 >个人信息</router-link
@@ -75,8 +75,8 @@ export default {
   min-height: 400px;
 }
 .all {
-  height: 626px;
-  width: 1298px;
+  height: 990px;
+  width: 1928px;
   margin-left: -8px;
   margin-top: -8px;
   margin-bottom: -18px;

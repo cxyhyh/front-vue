@@ -4,6 +4,7 @@ import Button from 'ant-design-vue'
 import index from './views/Home/index.vue'
 //Admin
 import daping from '../src/views/Pages/Admin/daping.vue'
+import daPingApplication from './views/Pages/daping/application.vue'
 import aside from './components/Breadcrumb/CommonAside.vue'
 import head from './components/Breadcrumb/CommonHeader.vue'
 import map from './views/Pages/echarts/map.vue'
@@ -80,6 +81,7 @@ let router = new VueRouter({
             component: daping,
             meta: {
                 auth: true,
+                role: "admin",
 
             },
             children: [
@@ -111,6 +113,14 @@ let router = new VueRouter({
                 path: 'daPingJobPie',
                 name: 'daPingJobPie',
                 component: daPingJobPie,
+                meta: {
+                    auth: true,
+                },
+            },
+            {
+                path: 'daPingApplication',
+                name: 'daPingApplication',
+                component: daPingApplication,
                 meta: {
                     auth: true,
                 },

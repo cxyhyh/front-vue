@@ -3,7 +3,7 @@
     <el-main>
       <div class="bt">
         <router-link to="/userIndex/zpInfo">
-        <el-button class="bto" type="primary" size="mini">返回</el-button>
+          <el-button class="bto" type="primary" size="mini">返回</el-button>
         </router-link>
       </div>
       <div style="margin-left: 1%; margin-right: 1%">
@@ -26,7 +26,7 @@
                 <div class="gsmc">
                   <span>{{ item.companyName }}</span>
                 </div>
-                 <div class="zw">
+                <div class="zw">
                   <span>{{ item.jobName }}</span>
                 </div>
                 <div class="xs">
@@ -44,11 +44,10 @@
                   <span>招聘人数：{{ item.recruitNum }}人</span>
                 </div>
                 <div class="zpxz">
-                    <div class="fgx">
-                         <el-divider></el-divider>
+                  <div class="fgx">
+                    <el-divider></el-divider>
+                  </div>
 
-                    </div>
-                   
                   <span>
                     投递须知：该职位由企业通过授权拉勾网发布在百度百聘，百度无法保证该职位真实性和有效性，建议您谨慎投递。
                   </span>
@@ -72,20 +71,15 @@
                     :before-remove="beforeRemove"
                     :show-file-list="true"
                   >
-                    <el-button
-                      size="mini"
-                      type="primary"
-                      icon="el-icon-upload"
-                    >上传简历</el-button>
+                    <el-button type="primary" icon="el-icon-upload"
+                      >上传简历</el-button
+                    >
                   </el-upload>
-              </div>
-              <div>
-               
-              </div>
-               <div class="but2">
+                </div>
+                <div></div>
+                <div class="but2">
                   <el-button
                     type="primary"
-                    size="mini"
                     icon="el-icon-download"
                     @click="download()"
                     >下载简历</el-button
@@ -211,16 +205,14 @@
                 shadow="hover"
                 class="card4"
               >
-               <img src="../../../assets/logo2.jpg">
-              <!-- <img src="../../../assets/topic.png"> -->
-               
-                
+                <img src="../../../assets/logo2.jpg" width="670px" />
+                <!-- <img src="../../../assets/topic.png"> -->
               </el-card>
             </div>
           </el-col>
         </el-row>
       </div>
-       <div style="margin-left: 1%; margin-right: 1%">
+      <div style="margin-left: 1%; margin-right: 1%">
         <el-row>
           <el-col
             :span="1"
@@ -234,33 +226,35 @@
                 shadow="hover"
                 class="card5"
               >
-              
-              <img src="../../../assets/topic.png">
-               
-                
+                <img src="../../../assets/topic.png" width="660px" />
               </el-card>
             </div>
           </el-col>
         </el-row>
       </div>
-
     </el-main>
   </el-container>
 </template>
 
 <script>
-import { jobAndCompanyDetailByjobName,getUsernameAndApplicationPosition,downloadFile,updateUsernameById,apply } from "../../../request/api";
-import Cookie from 'js-cookie'
+import {
+  jobAndCompanyDetailByjobName,
+  getUsernameAndApplicationPosition,
+  downloadFile,
+  updateUsernameById,
+  apply,
+} from "../../../request/api";
+import Cookie from "js-cookie";
 export default {
   name: "",
   data() {
     return {
       job: [],
-      name:"",
-      list:[],
+      name: "",
+      list: [],
     };
   },
-  
+
   mounted() {
     let jobName1 = this.$route.query.jobName;
 
@@ -276,20 +270,20 @@ export default {
         console.log(err);
       });
 
-      this.getUsernameAndApplicationPosition();
+    this.getUsernameAndApplicationPosition();
   },
-  
-  computed:{
-    showUsername(){
-      console.log(Cookie.get('username'));
-      return Cookie.get('username')
-    }
+
+  computed: {
+    showUsername() {
+      console.log(Cookie.get("username"));
+      return Cookie.get("username");
+    },
   },
   methods: {
     updateUsernameById() {
       updateUsernameById({
         fileName: this.name,
-        username: Cookie.get('username'),
+        username: Cookie.get("username"),
         applicationPosition: this.$route.query.jobName,
       })
         .then((res) => {
@@ -299,20 +293,21 @@ export default {
           console.log(err);
         });
     },
-    suc(response, file){
+    suc(response, file) {
       this.name = file.name;
       this.updateUsernameById();
-      this.$message(this.name+ "上传成功");
-      console.log(this.name)
+      this.$message(this.name + "上传成功");
+      console.log(this.name);
     },
 
-    download(){
-      if(this.name == ""){
+    download() {
+      if (this.name == "") {
         this.$message("请先上传简历才能下载哦 ！！");
+      } else {
+        this.downloadFile();
       }
-      else{this.downloadFile();}
     },
-    
+
     downloadFile() {
       downloadFile({
         fileName: this.name,
@@ -322,17 +317,19 @@ export default {
           console.log(res);
           const blob = new Blob([res]);
           const fileName = this.name;
-          if ('download' in document.createElement('a')) { // 非IE下载
-            const elink = document.createElement('a');
+          if ("download" in document.createElement("a")) {
+            // 非IE下载
+            const elink = document.createElement("a");
             elink.download = fileName;
-            elink.style.display = 'none';
+            elink.style.display = "none";
             elink.href = URL.createObjectURL(blob);
             document.body.appendChild(elink);
             elink.click();
             URL.revokeObjectURL(elink.href); // 释放URL 对象
-            document.body.removeChild(elink)
-          } else { // IE10+下载
-            navigator.msSaveBlob(blob, fileName)
+            document.body.removeChild(elink);
+          } else {
+            // IE10+下载
+            navigator.msSaveBlob(blob, fileName);
           }
         })
         .catch(function (err) {
@@ -340,15 +337,17 @@ export default {
         });
     },
     handleExceed() {
-        this.$message.warning(`一次只能上传一个文件，若要重新上传，请先移除上次记录`);
-      },
+      this.$message.warning(
+        `一次只能上传一个文件，若要重新上传，请先移除上次记录`
+      );
+    },
     beforeRemove(file) {
-        return this.$confirm(`确定移除 ${ file.name }？`);
-      },
-      getUsernameAndApplicationPosition() {
-        var that=this;
+      return this.$confirm(`确定移除 ${file.name}？`);
+    },
+    getUsernameAndApplicationPosition() {
+      var that = this;
       getUsernameAndApplicationPosition({
-        username: Cookie.get('username'),
+        username: Cookie.get("username"),
         applicationPosition: this.$route.query.jobName,
       })
         .then((res) => {
@@ -360,32 +359,30 @@ export default {
         });
     },
     applyTo() {
-      if(this.list.length == 0){
-        if(this.name == ""){
-         this.$message("请先上传您的简历！");
-      } else{
-        this.apply();
+      if (this.list.length == 0) {
+        if (this.name == "") {
+          this.$message("请先上传您的简历！");
+        } else {
+          this.apply();
+        }
+      } else if (!this.list.length == 0) {
+        this.$message("您有申请过这份职位的记录，无需重复申请！！");
       }
-      }else if(!this.list.length == 0){
-        this.$message("您有申请过这份职位的记录，无需重复申请！！")
-      }
-     
-      
     },
     apply() {
-     apply({
-       username: Cookie.get('username'),
-       applicationPosition: this.$route.query.jobName,
+      apply({
+        username: Cookie.get("username"),
+        applicationPosition: this.$route.query.jobName,
       })
         .then((res) => {
           const code = res.data.code;
-          console.log(code)
-          if(code == 200){
+          console.log(code);
+          if (code == 200) {
             this.$message("申请成功,待审核中。。。。！");
-          }else if(code===400){
+          } else if (code === 400) {
             this.$message("您已申请过了！！！");
           }
-          
+
           console.log(res.data);
         })
         .catch(function (err) {
@@ -396,89 +393,85 @@ export default {
 };
 </script>
 <style scoped>
-.bt{
+.bt {
   line-height: 10px;
-  margin-top: -10px;
+  margin-top: -20px;
   width: 70px;
-  margin-left: 20px;
+  margin-left: -20px;
 }
 
-.card5{
-     margin-top: -300px;
-  width: 465px;
-  height: 300px;
-  margin-left: 700px;
+.card5 {
+  margin-top: -600px;
+  width: 665px;
+  height: 600px;
+  margin-left: 1035px;
 }
-.card4{
-     margin-top: -800px;
-  width: 465px;
+.card4 {
+  margin-top: -1100px;
+  width: 665px;
   height: 500px;
-  margin-left: 700px;
+  margin-left: 1035px;
 }
 .jj {
-
   font-size: 15px;
   margin-left: 25px;
   margin-top: 10px;
   text-align: left;
   line-height: 30px;
-  width: 650px;
+  width: 950px;
 }
 .yzbm {
-    text-align:  left;
+  text-align: left;
   font-size: 15px;
   margin-left: 25px;
   margin-top: 10px;
   line-height: 20px;
 }
 .yx {
-    text-align:  left;
+  text-align: left;
   font-size: 15px;
   margin-left: 25px;
   margin-top: 10px;
   line-height: 20px;
 }
 .wz {
-    text-align:  left;
+  text-align: left;
   font-size: 15px;
   margin-left: 25px;
   margin-top: 10px;
   line-height: 20px;
 }
 .lxfs {
-    text-align:  left;
+  text-align: left;
   font-size: 15px;
   margin-left: 25px;
   margin-top: 10px;
   line-height: 20px;
 }
 .dz {
-
-    text-align:  left;
+  text-align: left;
   font-size: 15px;
   margin-left: 25px;
   margin-top: 10px;
   line-height: 20px;
 }
 .clsj {
-
-    text-align:  left;
+  text-align: left;
   font-size: 15px;
   margin-left: 25px;
   margin-top: 30px;
   line-height: 20px;
 }
 .gsmca {
-    
-     text-align: left;
+  text-align: left;
   font-size: 17px;
   margin-left: 120px;
   margin-top: -18px;
   line-height: 20px;
 }
 .gsjj {
-     text-align: left;
-     width: 80px;
+  text-align: left;
+  width: 80px;
   font-size: 18px;
   font: bolder;
   margin-top: 35px;
@@ -487,40 +480,38 @@ export default {
 }
 .card3 {
   margin-top: 20px;
-  width: 700px;
-  height: 700px;
+  width: 1010px;
+  height: 1000px;
   margin-left: -35px;
 }
 .card2 {
   margin-top: -300px;
-  width: 465px;
+  width: 665px;
   height: 200px;
-  margin-left: 700px;
+  margin-left: 1035px;
 }
 .jtyq {
-     text-align: left;
+  text-align: left;
   font-size: 15px;
   margin-top: 15px;
   margin-left: 25px;
   line-height: 20px;
 }
 .gzdd {
-     text-align: left;
+  text-align: left;
   font-size: 15px;
   margin-top: 15px;
   margin-left: 25px;
   line-height: 20px;
 }
-.zwmc{
- font-size: 15px;
+.zwmc {
+  font-size: 15px;
   text-align: left;
   margin-top: 30px;
   margin-left: 25px;
   line-height: 20px;
-
 }
 .zwlx {
-   
   font-size: 15px;
   text-align: left;
   margin-top: 20px;
@@ -528,7 +519,6 @@ export default {
   line-height: 20px;
 }
 .zwms {
-    
   font-size: 18px;
   text-align: left;
   font: bolder;
@@ -538,66 +528,61 @@ export default {
 }
 .card1 {
   margin-top: 20px;
-  width: 700px;
+  width: 1010px;
   height: 300px;
   margin-left: -35px;
 }
-.but2{
-   width: 10px;
-    height: 40px;
-    margin-top: -40px;
-    line-height: 20px;
-    margin-left: 1070px;
-
+.but2 {
+  width: 10px;
+  height: 40px;
+  margin-top: -40px;
+  line-height: 20px;
+  margin-left: 1400px;
 }
-.but1{
-    width: 100px;
-    height: 40px;
-    margin-top: 20px;
-    line-height: 20px;
-    margin-left: 940px;
+.but1 {
+  width: 100px;
+  height: 40px;
+  margin-top: 20px;
+  line-height: 20px;
+  margin-left: 1540px;
 }
 .but {
-    
-    width: 130px;
-    height: 40px;
-    margin-top: -190px;
-    line-height: 40px;
-    margin-left: 980px;
- 
+  width: 130px;
+  height: 40px;
+  margin-top: -190px;
+  line-height: 40px;
+  margin-left: 1530px;
 }
 .zpxz {
-    text-align: left;
-    margin-left: 24px;
-    margin-top: 35px;
-
+  text-align: left;
+  margin-left: 24px;
+  margin-top: 35px;
 
   font-size: 15px;
   color: grey;
   line-height: 20px;
 }
 .zprs {
-     width: 120px;
-    text-align: left;
-    margin-top: -22px;
-    margin-left: 270px;
+  width: 120px;
+  text-align: left;
+  margin-top: -22px;
+  margin-left: 270px;
   color: rgb(102, 101, 101);
   font-size: 15px;
   line-height: 20px;
 }
 .jy {
-    
-     width: 130px;
-     margin-top: -19px;
-     margin-left: 145px;
-    text-align: left;
+  width: 130px;
+  margin-top: -19px;
+  margin-left: 145px;
+  text-align: left;
   color: rgb(102, 101, 101);
   font-size: 15px;
   line-height: 20px;
 }
 .xl {
-   width: 130px;
-    text-align: left;
+  width: 130px;
+  text-align: left;
   color: rgb(102, 101, 101);
   font-size: 15px;
   line-height: 20px;
@@ -605,8 +590,7 @@ export default {
   margin-top: 25px;
 }
 .xs {
-    
-    text-align: left;
+  text-align: left;
   color: #ff3c00;
   font-size: 17px;
   margin-left: 25px;
@@ -614,25 +598,23 @@ export default {
   margin-top: 20px;
   line-height: 20px;
 }
-.zw{
-   text-align: left;
- color: #ff3c00;
+.zw {
+  text-align: left;
+  color: #ff3c00;
   font-size: 20px;
-margin-left: 500px;
+  margin-left: 500px;
   line-height: 20px;
   margin-top: -20px;
 }
 .gsmc {
-     
-    text-align: left;
- 
+  text-align: left;
+
   font-size: 23px;
-margin-left: 25px;
+  margin-left: 25px;
   line-height: 20px;
   margin-top: 18px;
 }
 .fbsj {
-   
   font-size: 15px;
   text-align: left;
   color: gray;
@@ -641,13 +623,13 @@ margin-left: 25px;
   line-height: 20px;
 }
 .card {
-  width: 1200px;
+  width: 1740px;
   height: 270px;
   margin-left: -35px;
 }
 .el-container {
-  height: 700px;
-  width: 1298px;
+  height: 975px;
+  width: 1928px;
   margin-left: -8px;
   margin-top: -8px;
   margin-bottom: -18px;

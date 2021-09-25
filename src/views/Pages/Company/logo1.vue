@@ -41,23 +41,23 @@ export default {
 }
 .el-carousel__item:nth-child(2n) {
   background-color: #99a9bf;
-  height: 558px;
+ height: 910px;
 }
 
 .el-carousel__item:nth-child(2n + 1) {
-  height: 558px;
+  height: 910px;
   background-color: #d3dce6;
 }
 .car {
-  height: 558px;
-  width: 1298px;
+height: 910px;
+  width: 1925px;
   margin-left: -8px;
   margin-top: -8px;
   margin-bottom: -18px;
 }
 .img{
-  height: 570px;
-  width: 1312px;
+ height: 910px;
+  width: 1925px;
   margin-left: -8px;
   margin-top: -8px;
   margin-bottom: -18px;

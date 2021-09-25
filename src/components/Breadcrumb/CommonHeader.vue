@@ -111,31 +111,37 @@ export default {
 }
 .sp {
   margin-left: -10px;
-  font-size: 17px;
+   text-decoration: none;
+  font-size: 25px;
   color: gold;
 }
 .qt {
-  width: 200px;
-  margin-left: 450px;
+  width: 400px;
+  margin-left: 600px;
   margin-top: -60px;
+
 }
 .sy {
   color: white;
 }
 .tx {
   width: 50px;
-  margin-left: 1020px;
-  margin-top: -50px;
+  margin-left: 1580px;
+  margin-top: -55px;
 }
 .l-content {
   display: flex;
   // 设置弹性容器中元素水平方向居中
   align-items: center;
   width: 420px;
-  height: 30px;
+  height: 40px;
   margin-left: -20px;
-  margin-top: 28px;
+  margin-top: 25px;
 }
+.el-breadcrumb {
+ font-size: 17px;
+}
+
 </style>
 
 

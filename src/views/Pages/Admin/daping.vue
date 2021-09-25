@@ -27,7 +27,7 @@
       </div>
 
       <div class="right">
-        <div class="rightup"><dv-border-box-1></dv-border-box-1></div>
+        <div class="rightup"><dv-border-box-1><Application></Application></dv-border-box-1></div>
         <div class="rightmod"><dv-border-box-1></dv-border-box-1></div>
         <div class="rightdown"><dv-border-box-1></dv-border-box-1></div>
       </div>
@@ -37,15 +37,16 @@
 
 <script>
 import JobPie from "../daping/jobPie.vue";
-// import UserPie from '../daping/userPie.vue'
 import CompanyPie from "../daping/companyPie.vue";
 import Map from "../daping/map.vue";
+import Application from '../daping/application.vue';
 export default {
   components: {
     //UserPie,
     JobPie,
     CompanyPie,
     Map,
+    Application,
   },
 };
 </script>
@@ -57,7 +58,7 @@ export default {
 }
 .contains {
   background: #000a2d;
-  height: 990px;
+  height: 975px;
   width: 1928px;
   margin-left: -8px;
   margin-top: -8px;

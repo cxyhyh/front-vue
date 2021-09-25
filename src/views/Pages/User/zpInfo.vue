@@ -60,7 +60,7 @@
         查询
       </el-button>
     </div>
-    <div style="margin-left: 1%; margin-right: 1%">
+    <div style="margin-left: 10%; margin-right: 1%">
       <el-row>
         <el-col
           :span="4"
@@ -115,7 +115,7 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="currentPage"
-        :page-sizes="[4, 8, 16, 32]"
+        :page-sizes="[16, 32, 64, 128]"
         :page-size="pageSize"
         layout="sizes, prev, pager, next, total, jumper "
         :total="total"
@@ -137,7 +137,7 @@ export default {
   data() {
     return {
       currentPage: 1,
-      pageSize: 8,
+      pageSize: 16,
       total: 0,
       jobs: [],
       jobTypeOption: [],
@@ -270,12 +270,6 @@ export default {
 };
 </script>
 <style scoped>
-/* .but2 {
-  border: solid red;
-  margin-top: 10px;
-  float: right;
-  margin-right: 30px;
-} */
 .but {
   margin-left: -150px;
   margin-top: 10px;

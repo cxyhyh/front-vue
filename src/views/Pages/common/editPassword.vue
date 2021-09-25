@@ -2,16 +2,16 @@
   <div class="xg">
     <div>
 <el-form :model="list" label-width="100px">
-        <el-form-item label="新密码" prop="password" style="margin-left:300px;">
+        <el-form-item label="新密码" prop="password" style="margin-left:600px;">
         <el-input v-model="list.password"></el-input>
       </el-form-item>
-      <el-form-item label="再次输入密码" prop="password" style="margin-left:300px;">
+      <el-form-item label="再次输入密码" prop="password" style="margin-left:600px;">
         <el-input v-model="list.password"></el-input>
       </el-form-item>
       </el-form>
     </div>
       <div>
-        <el-button style="margin-left:520px" @click="update()">修改</el-button>
+        <el-button style="margin-left:820px" @click="update()">修改</el-button>
       </div>
   </div>
 </template>

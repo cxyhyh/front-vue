@@ -43,7 +43,7 @@
       <div style="margin-left: 1%; margin-right: 1%">
         <el-row>
           <el-col
-            :span="8"
+            :span="4"
             v-for="(item, index) in users"
             :key="index"
             :offset="1"
@@ -125,7 +125,7 @@
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page="currentPage"
-          :page-sizes="[4, 8, 16, 32]"
+          :page-sizes="[ 8, 16, 32,64]"
           :page-size="pageSize"
           layout="sizes, prev, pager, next, total, jumper "
           :total="total"
@@ -150,7 +150,7 @@ export default {
   data() {
     return {
       currentPage: 1,
-      pageSize: 4,
+      pageSize: 8,
       total: 0,
       jianlis: [],
       users: [],
