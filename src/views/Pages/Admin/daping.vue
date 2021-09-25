@@ -31,7 +31,6 @@
           </div>
           <div class="modright"><dv-border-box-1></dv-border-box-1></div>
         </div>
-
         <div class="right">
           <div class="rightup">
             <dv-border-box-1><Application></Application></dv-border-box-1>
