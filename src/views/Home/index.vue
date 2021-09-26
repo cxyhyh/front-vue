@@ -158,6 +158,7 @@ export default {
   box-shadow: 0;
   border-radius: 10px; /*登录窗口边角圆滑*/
 }
+
 .inputBox input {
   width: 80%;
   padding: 10px 0;
