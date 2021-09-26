@@ -38,7 +38,7 @@ export default {
                 fontStyle: "italic", //标题字体
               },
             },
-            
+          
             tooltip: {
               trigger: "item",
             },
