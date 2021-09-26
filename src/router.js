@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Button from 'ant-design-vue'
 import index from './views/Home/index.vue'
 //Admin
+import daPingCross from '../src/views/Pages/daping/cross.vue'
 import daping from '../src/views/Pages/Admin/daping.vue'
 import daPingApplication from './views/Pages/daping/application.vue'
 import aside from './components/Breadcrumb/CommonAside.vue'
@@ -121,6 +122,14 @@ let router = new VueRouter({
                 path: 'daPingApplication',
                 name: 'daPingApplication',
                 component: daPingApplication,
+                meta: {
+                    auth: true,
+                },
+            },
+            {
+                path: 'daPingCross',
+                name: 'daPingCross',
+                component: daPingCross,
                 meta: {
                     auth: true,
                 },

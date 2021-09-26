@@ -15,9 +15,7 @@
           </div>
           <div class="leftmod">
             <dv-border-box-1>
-              <dv-decoration-9 style="width: 100px; height: 100px"
-                >66%</dv-decoration-9
-              >
+              <UserPie></UserPie>
             </dv-border-box-1>
           </div>
           <div class="leftdown">
@@ -31,9 +29,10 @@
           </div>
           <div class="modright"><dv-border-box-1></dv-border-box-1></div>
         </div>
+
         <div class="right">
           <div class="rightup">
-            <dv-border-box-1><Application></Application></dv-border-box-1>
+            <dv-border-box-1><Cross></Cross>></dv-border-box-1>
           </div>
           <div class="rightmod"><dv-border-box-1></dv-border-box-1></div>
           <div class="rightdown"><dv-border-box-1></dv-border-box-1></div>
@@ -47,14 +46,17 @@
 import JobPie from "../daping/jobPie.vue";
 import CompanyPie from "../daping/companyPie.vue";
 import Map from "../daping/map.vue";
-import Application from "../daping/application.vue";
+import UserPie from "../daping/userPie.vue";
+//import Application from "../daping/application.vue";
+import Cross from "../daping/cross.vue";
 export default {
   components: {
-    //UserPie,
+    UserPie,
     JobPie,
     CompanyPie,
     Map,
-    Application,
+    //Application,
+    Cross,
   },
 };
 </script>

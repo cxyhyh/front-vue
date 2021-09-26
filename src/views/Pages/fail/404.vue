@@ -32,8 +32,8 @@ export default {
 
 <style lang="scss" scoped>
 .wscn-http404-container{
-  height: 650px;
-  width: 1300px;
+  height: 990px;
+  width: 1928px;
   margin-left: -8px;
   margin-top: -8px;
   margin-bottom: -18px;

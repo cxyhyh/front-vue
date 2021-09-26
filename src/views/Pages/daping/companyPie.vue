@@ -48,9 +48,9 @@ export default {
             title: {
               text: "企业类型统计可视化",
               left: "center",
-              top: 20,
+              top: 1,
               textStyle: {
-                color: "white",
+                color: "yellow",
                 fontStyle: "italic", //标题字体
               },
             },
