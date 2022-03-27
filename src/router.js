@@ -49,7 +49,7 @@ import zpLiuC from './views/Pages/Company/zpLiuC.vue'
 Vue.use(Button);
 Vue.use(VueRouter);
 let router = new VueRouter({
-    mode: 'history',
+    // mode: 'history',
     routes: [{
             path: '/',
             name: 'index',

@@ -2,11 +2,11 @@ import axios from 'axios'
 // import router from '../router'
 // 环境的切换
 if (process.env.NODE_ENV === 'development') {
-  axios.defaults.baseURL = ''
+  axios.defaults.baseURL = 'http://121.43.158.100:9090'
 } else if (process.env.NODE_ENV === 'debug') {
-  axios.defaults.baseURL = ''
+  axios.defaults.baseURL = 'http://121.43.158.100:9090'
 } else if (process.env.NODE_ENV === 'production') {
-  axios.defaults.baseURL = ''
+  axios.defaults.baseURL = 'http://121.43.158.100:9090'
 }
 axios.defaults.timeout = 10000
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8;multipart/form-data'
